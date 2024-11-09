@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -18,12 +19,12 @@ const Home = () => {
 
       {/* Call to Action Section */}
       <div className="text-center mt-6">
-        <a
-          href="/services"
+        <Link
+          to="services"
           className="inline-block bg-blue-700 text-white py-2 px-6 rounded-md text-lg hover:bg-blue-600 transition duration-300"
         >
           تصفح خدماتنا
-        </a>
+        </Link>
       </div>
 
       {/* Footer Section */}
