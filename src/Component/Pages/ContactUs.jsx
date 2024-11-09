@@ -28,7 +28,7 @@ const ContactUs = () => {
           حجز موعد استشارة طبية
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2 gap-6">
             {/* Name Field */}
             <div className="flex flex-col">
               <label className="text-sm font-medium text-gray-700 mb-2">الاسم الكامل</label>
