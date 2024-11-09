@@ -22,6 +22,7 @@ const ContactUs = () => {
 
   return (
     <div className="pt-[4rem] pb-8 px-4">
+      {/* Form Section */}
       <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">
           حجز موعد استشارة طبية
