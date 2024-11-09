@@ -24,7 +24,7 @@ const Header = () => {
       <div className="container mx-auto flex items-center justify-between flex-wrap md:flex-nowrap">
         {/* Logo Section */}
         <Link to="/" className="text-white text-2xl font-semibold">
-          Egypt Health Care
+          EHC
         </Link>
 
         {/* Desktop Menu */}
@@ -111,10 +111,10 @@ const Header = () => {
             )}
           </div>
 
-          <Link to="/appointments" className="text-white hover:text-gray-200">
+          <Link to="services" className="text-white hover:text-gray-200">
             خدماتنا
           </Link>
-          <Link to="/contact" className="text-white hover:text-gray-200">
+          <Link to="contact" className="text-white hover:text-gray-200">
             احجز موعد
           </Link>
         </div>
@@ -228,13 +228,13 @@ const Header = () => {
           </div>
 
           <Link
-            to="/appointments"
+            to="services"
             className="block text-white py-2 px-4 hover:bg-blue-600"
           >
             خدماتنا
           </Link>
           <Link
-            to="/contact"
+            to="contact"
             className="block text-white py-2 px-4 hover:bg-blue-600"
           >
             احجز موعد
