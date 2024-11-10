@@ -111,10 +111,10 @@ const Header = () => {
             )}
           </div>
 
-          <Link to="services" className="text-white hover:text-gray-200">
+          <Link to="/services" className="text-white hover:text-gray-200">
             خدماتنا
           </Link>
-          <Link to="contact" className="text-white hover:text-gray-200">
+          <Link to="/contact" className="text-white hover:text-gray-200">
             احجز موعد
           </Link>
         </div>
@@ -228,13 +228,13 @@ const Header = () => {
           </div>
 
           <Link
-            to="services"
+            to="/services"
             className="block text-white py-2 px-4 hover:bg-blue-600"
           >
             خدماتنا
           </Link>
           <Link
-            to="contact"
+            to="/contact"
             className="block text-white py-2 px-4 hover:bg-blue-600"
           >
             احجز موعد

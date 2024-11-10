@@ -24,14 +24,14 @@ const Home = () => {
           {/* Call to Action Section */}
           <div className=" flex justify-center gap-8  md:justify-start">
             <div className=" mt-6 ms-4">
-              <Link to="services">
+              <Link to="/services">
                 <Button color="blue" size="lg" className="rounded-md">
                   تصفح خدماتنا
                 </Button>
               </Link>
             </div>
             <div className="text-star mt-6">
-              <Link to="contact">
+              <Link to="/contact">
                 <Button color="blue" size="lg" className="rounded-md">
                   احجزموعد
                 </Button>
