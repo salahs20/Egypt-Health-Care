@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Input, Textarea, Button, Select, Option } from '@material-tailwind/react';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +17,6 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // هنا يمكنك إضافة الكود لإرسال البيانات إلى الخادم أو API.
     alert('تم إرسال الطلب بنجاح');
   };
 
@@ -28,87 +28,75 @@ const ContactUs = () => {
           حجز موعد استشارة طبية
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-6">
+          <div className="flex flex-col md:grid grid-cols-2 gap-6">
             {/* Name Field */}
             <div className="flex flex-col">
-              <label className="text-sm font-medium text-gray-700 mb-2">الاسم الكامل</label>
-              <input
-                type="text"
+              <Input
+                label="الاسم الكامل"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="أدخل اسمك"
                 required
               />
             </div>
 
             {/* Email Field */}
             <div className="flex flex-col">
-              <label className="text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
-              <input
+              <Input
                 type="email"
+                label="البريد الإلكتروني"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="أدخل بريدك الإلكتروني"
                 required
               />
             </div>
 
             {/* Phone Field */}
             <div className="flex flex-col">
-              <label className="text-sm font-medium text-gray-700 mb-2">رقم الهاتف</label>
-              <input
+              <Input
                 type="text"
+                label="رقم الهاتف"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="أدخل رقم هاتفك"
                 required
               />
             </div>
 
             {/* Service Field */}
             <div className="flex flex-col">
-              <label className="text-sm font-medium text-gray-700 mb-2">الخدمة المطلوبة</label>
-              <select
+              <Select
+                label="الخدمة المطلوبة"
                 name="service"
                 value={formData.service}
-                onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={(value) => setFormData({ ...formData, service: value })}
                 required
               >
-                <option value="">اختر الخدمة</option>
-                <option value="استشارة طبية">استشارة طبية</option>
-                <option value="رعاية أسنان">رعاية أسنان</option>
-                <option value="جراحة">جراحة</option>
-              </select>
+                <Option value="">اختر الخدمة</Option>
+                <Option value="استشارة طبية">استشارة طبية</Option>
+                <Option value="رعاية أسنان">رعاية أسنان</Option>
+                <Option value="جراحة">جراحة</Option>
+              </Select>
             </div>
 
             {/* Message Field */}
             <div className="flex flex-col col-span-2">
-              <label className="text-sm font-medium text-gray-700 mb-2">ملاحظات أو تفاصيل إضافية</label>
-              <textarea
+              <Textarea
+                label="ملاحظات أو تفاصيل إضافية"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="أدخل أي تفاصيل إضافية"
-                rows="4"
+                rows={4}
+                
               />
             </div>
           </div>
 
           <div className="text-center mt-6">
-            <button
-              type="submit"
-              className="bg-blue-700 text-white py-2 px-6 rounded-md text-lg hover:bg-blue-600 transition duration-300"
-            >
+            <Button type="submit" color="blue">
               إرسال الطلب
-            </button>
+            </Button>
           </div>
         </form>
       </div>
