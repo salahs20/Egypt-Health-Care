@@ -156,7 +156,7 @@ const Header = () => {
                 closeDropdowns();
                 setIsServicesOpen(!isServicesOpen);
               }}
-              className="block text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
+              className=" text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
             >
               <span>خدمات طبية</span>
               <MdArrowDropDown />
@@ -195,7 +195,7 @@ const Header = () => {
                 closeDropdowns();
                 setIsMedicalInfoOpen(!isMedicalInfoOpen);
               }}
-              className="block text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
+              className=" text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
             >
               <span>معلومات طبية</span>
               <MdArrowDropDown />
