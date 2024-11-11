@@ -5,7 +5,7 @@ import ph from "../../Imag/WhatsApp Image 2024-11-10 at 20.54.05_95d6df99.png"
 const Home = () => {
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center md:flex md:flex-row md:justify-between   pt-[4rem] px-4">
+      <div className=" min-h-screen flex flex-col items-center justify-center md:flex md:flex-row md:justify-between   pt-[4rem] px-4">
         {/* Logo Section */}
         <div className=" text-[3rem] mb-8 md:w-1/2 text-center md:text-start w-screen">
           <Typography   className="font-bold text-blue-600 text-[2rem] md:text-[3rem] ">
@@ -39,8 +39,8 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center w-full h-full md:w-1/2 ">
-          <img src={ph} alt="" className="w-[50%]  "/>
+        <div className=" flex justify-center w-full h-full md:w-1/2 ">
+          <img src={ph} alt="" className="w-[80%] md:w-[50%]  "/>
           
         </div>
       </div>
