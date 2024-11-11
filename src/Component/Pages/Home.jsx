@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Typography, Button } from "@material-tailwind/react";
-
+import ph from "../../Imag/WhatsApp Image 2024-11-10 at 20.54.05_95d6df99.png"
 const Home = () => {
   return (
     <>
@@ -39,8 +39,8 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center w-full h-screen md:w-1/2 ">
-          <img src="" alt="" />
+        <div className="flex justify-center w-full h-full md:w-1/2 ">
+          <img src={ph} alt="" className="w-[40%]  "/>
           
         </div>
       </div>

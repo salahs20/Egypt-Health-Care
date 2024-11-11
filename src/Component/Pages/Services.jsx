@@ -67,7 +67,7 @@ const Services = () => {
 
       {/* Contact Button Section */}
       <div className="text-center mt-12 pb-[4rem]">
-        <Link to="contact">
+        <Link to="/contact">
           <Button color="blue" size="lg" className="rounded-md">
             تواصل معنا
           </Button>

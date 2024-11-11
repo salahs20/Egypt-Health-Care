@@ -162,7 +162,7 @@ const Header = () => {
               <MdArrowDropDown />
             </button>
             {isServicesOpen && (
-              <div className="mt-2 space-y-2 bg-blue-600 rounded-md">
+              <div className="mt-2 space-y-2 bg-blue-gray-500 rounded-md">
                 <Link
                   to="/services/consultations"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
@@ -201,7 +201,7 @@ const Header = () => {
               <MdArrowDropDown />
             </button>
             {isMedicalInfoOpen && (
-              <div className="mt-2 space-y-2 bg-blue-600 rounded-md">
+              <div className="mt-2 space-y-2 bg-blue-gray-500 rounded-md">
                 <Link
                   to="/info/health-tips"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
