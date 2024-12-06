@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import logo from "../../Imag/أحمد-عماد32-copy.png";
+import Avatar from "./Avatar";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);  // حالة لفتح/إغلاق الدروب داون
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMedicalInfoOpen, setIsMedicalInfoOpen] = useState(false);
 
@@ -14,16 +16,18 @@ const Header = () => {
   };
 
   const handleMobileItemClick = () => {
-    setIsOpen(false); // إغلاق القائمة عند اختيار عنصر
-    closeDropdowns(); // إغلاق القوائم المنسدلة
+    setIsOpen(false); 
+    closeDropdowns(); 
   };
 
   useEffect(() => {
-    const handleClickOutside = () => closeDropdowns();
+    const handleClickOutside = () => {
+      if (isDropdownOpen) setIsDropdownOpen(false);  // إغلاق الـ dropdown إذا تم النقر خارجها
+    };
     window.addEventListener("click", handleClickOutside);
 
     return () => window.removeEventListener("click", handleClickOutside);
-  }, []);
+  }, [isDropdownOpen]);
 
   return (
     <nav className="bg-blue-700 shadow-md fixed w-full z-50 top-0">
@@ -35,12 +39,35 @@ const Header = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 items-center flex-row-reverse">
+          <div className="relative">
+            {/* Avatar and Dropdown */}
+            <Avatar onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                <Link
+                  to="/profile"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  الملف الشخصي
+                </Link>
+                <Link
+                  to="/logout"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  تسجيل الخروج
+                </Link>
+              </div>
+            )}
+          </div>
+
           <Link to="/" className="text-white hover:text-gray-200">
             رئيسية
           </Link>
 
           {/* Services Dropdown */}
-          <div className="relative p-4" onClick={(e) => e.stopPropagation()}>
+          <div className="relative " onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => {
                 closeDropdowns();
@@ -123,6 +150,12 @@ const Header = () => {
           <Link to="/contact" className="text-white hover:text-gray-200">
             احجز موعد
           </Link>
+          <Link to="/Login" className="text-white hover:text-gray-200">
+            تسجيل الدخول
+          </Link>{" "}
+          <Link to="/signup" className="text-white hover:text-gray-200">
+            انشاء حساب
+          </Link>
         </div>
 
         {/* Mobile Menu Toggle Button */}
@@ -151,6 +184,10 @@ const Header = () => {
             isOpen ? "block" : "hidden"
           } md:hidden mt-2 w-full bg-blue-700`}
         >
+          <div className="flex justify-end p-4 ">
+            <Avatar  handleMobileItemClick={handleMobileItemClick}/>
+          </div>
+
           <Link
             to="/"
             className="block text-white py-2 px-4 hover:bg-blue-600"
@@ -248,6 +285,20 @@ const Header = () => {
             onClick={handleMobileItemClick}
           >
             احجز موعد
+          </Link>
+          <Link
+            to="/Login"
+            className="block text-white py-2 px-4 hover:bg-blue-600"
+            onClick={handleMobileItemClick}
+          >
+            تسجيل الدخول
+          </Link>
+          <Link
+            to="/signup"
+            className="block text-white py-2 px-4 hover:bg-blue-600"
+            onClick={handleMobileItemClick}
+          >
+            انشاء حساب
           </Link>
         </div>
       </div>

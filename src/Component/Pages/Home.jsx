@@ -33,7 +33,7 @@ const Home = () => {
 
       {/* Image Section */}
       <div className="flex justify-center w-full h-full md:w-1/2 animate-scale-in">
-        <img src={ph} alt="Healthcare" className="w-2/5 md:w-1/2" />
+        <img src={ph} alt="Healthcare" className="w-2/5 md:w-2/5" />
       </div>
       
     </div>
