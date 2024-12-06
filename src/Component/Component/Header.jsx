@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
-import logo from "../../Imag/أحمد-عماد32-copy.png"
+import logo from "../../Imag/أحمد-عماد32-copy.png";
+
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -12,6 +13,11 @@ const Header = () => {
     setIsMedicalInfoOpen(false);
   };
 
+  const handleMobileItemClick = () => {
+    setIsOpen(false); // إغلاق القائمة عند اختيار عنصر
+    closeDropdowns(); // إغلاق القوائم المنسدلة
+  };
+
   useEffect(() => {
     const handleClickOutside = () => closeDropdowns();
     window.addEventListener("click", handleClickOutside);
@@ -20,8 +26,8 @@ const Header = () => {
   }, []);
 
   return (
-    <nav className="bg-blue-700  shadow-md fixed w-full z-50 top-0 ">
-      <div className=" pe-2 mx-auto flex items-center justify-between flex-wrap md:flex-nowrap">
+    <nav className="bg-blue-700 shadow-md fixed w-full z-50 top-0">
+      <div className="pe-3 ps-3 mx-auto flex items-center justify-between flex-wrap md:flex-nowrap">
         {/* Logo Section */}
         <Link to="/" className="p-2">
           <img src={logo} alt="" className="w-[50px] h-[40px]" />
@@ -145,7 +151,11 @@ const Header = () => {
             isOpen ? "block" : "hidden"
           } md:hidden mt-2 w-full bg-blue-700`}
         >
-          <Link to="/" className="block text-white py-2 px-4 hover:bg-blue-600">
+          <Link
+            to="/"
+            className="block text-white py-2 px-4 hover:bg-blue-600"
+            onClick={handleMobileItemClick}
+          >
             رئيسية
           </Link>
 
@@ -153,7 +163,6 @@ const Header = () => {
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => {
-                closeDropdowns();
                 setIsServicesOpen(!isServicesOpen);
               }}
               className=" text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
@@ -166,21 +175,21 @@ const Header = () => {
                 <Link
                   to="/services/consultations"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={closeDropdowns}
+                  onClick={handleMobileItemClick}
                 >
                   Consultations
                 </Link>
                 <Link
                   to="/services/dental-care"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={closeDropdowns}
+                  onClick={handleMobileItemClick}
                 >
                   Dental Care
                 </Link>
                 <Link
                   to="/services/surgery"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={closeDropdowns}
+                  onClick={handleMobileItemClick}
                 >
                   Surgery
                 </Link>
@@ -192,7 +201,6 @@ const Header = () => {
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => {
-                closeDropdowns();
                 setIsMedicalInfoOpen(!isMedicalInfoOpen);
               }}
               className=" text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
@@ -205,21 +213,21 @@ const Header = () => {
                 <Link
                   to="/info/health-tips"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={closeDropdowns}
+                  onClick={handleMobileItemClick}
                 >
                   Health Tips
                 </Link>
                 <Link
                   to="/info/disease-prevention"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={closeDropdowns}
+                  onClick={handleMobileItemClick}
                 >
                   Disease Prevention
                 </Link>
                 <Link
                   to="/info/medications"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={closeDropdowns}
+                  onClick={handleMobileItemClick}
                 >
                   Medications
                 </Link>
@@ -230,12 +238,14 @@ const Header = () => {
           <Link
             to="/services"
             className="block text-white py-2 px-4 hover:bg-blue-600"
+            onClick={handleMobileItemClick}
           >
             خدماتنا
           </Link>
           <Link
             to="/contact"
             className="block text-white py-2 px-4 hover:bg-blue-600"
+            onClick={handleMobileItemClick}
           >
             احجز موعد
           </Link>
