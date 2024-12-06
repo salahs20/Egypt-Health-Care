@@ -56,18 +56,16 @@ const UserTable = ({ users = [], loading, setUsers }) => {
   if (loading) return <p className="text-center text-gray-500">جاري تحميل البيانات...</p>;
 
   return (
-    <div className="pt-16 pb-8 px-4">
+    <div className="pt-16 pb-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">
-          إدارة المستخدمين
-        </h2>
+        <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">إدارة المستخدمين</h2>
 
         {/* إضافة مستخدم جديد */}
-        <div className="mb-6">
-          <div className="mb-4 flex items-center">
+        <div className="mb-3">
+          <div className="mb-4 flex items-center ">
             <input
               type="text"
-              className="border border-gray-300 py-2 px-4 rounded w-full"
+              className="border border-gray-300 py-2 px-4 rounded w-full "
               placeholder="اسم المستخدم"
               value={newUser.name}
               onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
@@ -76,7 +74,7 @@ const UserTable = ({ users = [], loading, setUsers }) => {
           <div className="mb-4 flex items-center">
             <input
               type="email"
-              className="border border-gray-300 py-2 px-4 rounded w-full"
+              className="border border-gray-300 py-2 px-4 rounded w-full "
               placeholder="البريد الإلكتروني"
               value={newUser.email}
               onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
@@ -85,7 +83,7 @@ const UserTable = ({ users = [], loading, setUsers }) => {
           <div className="mb-4 flex items-center">
             <input
               type="tel"
-              className="border border-gray-300 py-2 px-4 rounded w-full"
+              className="border border-gray-300 py-2 px-4 rounded w-full "
               placeholder="رقم الهاتف"
               value={newUser.phone}
               onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}
@@ -93,7 +91,7 @@ const UserTable = ({ users = [], loading, setUsers }) => {
           </div>
           <button
             onClick={handleAddUser}
-            className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+            className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded w-full sm:w-auto"
           >
             إضافة مستخدم
           </button>
@@ -131,7 +129,7 @@ const UserTable = ({ users = [], loading, setUsers }) => {
                   <td className="py-3 px-4">
                     <button
                       onClick={() => handleToggleAdmin(user.id)}
-                      className={`py-1 px-3 rounded ${
+                      className={`py-1 px-3 rounded w-full ${
                         user.isAdmin ? "bg-blue-500" : "bg-gray-500"
                       } text-white`}
                     >
@@ -141,7 +139,7 @@ const UserTable = ({ users = [], loading, setUsers }) => {
                   <td className="py-3 px-4">
                     <button
                       onClick={() => handleDeleteUser(user.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
+                      className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded w-full"
                     >
                       حذف
                     </button>

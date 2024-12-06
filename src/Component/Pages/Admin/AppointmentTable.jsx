@@ -6,15 +6,13 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
     service: "",
     date: "",
   });
-  const [editAppointmentId, setEditAppointmentId] = useState(null); // لتحديد الموعد الجاري تعديله
+  const [editAppointmentId, setEditAppointmentId] = useState(null);
 
-  // تصفية المواعيد بناءً على كلمة البحث
   const filteredAppointments = appointments.filter((appointment) =>
     appointment.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
     new Date(appointment.date).toLocaleString().includes(searchTerm)
   );
 
-  // دالة لإضافة موعد جديد
   const handleAddAppointment = async () => {
     const newAppointmentData = {
       service: newAppointment.service,
@@ -42,7 +40,6 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
     }
   };
 
-  // دالة لحذف موعد
   const handleDeleteAppointment = async (id) => {
     try {
       const res = await fetch(`http://localhost:3000/appointments/${id}`, {
@@ -61,13 +58,11 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
     }
   };
 
-  // دالة لتفعيل وضع التعديل
   const handleEditClick = (appointment) => {
     setEditAppointmentId(appointment.id);
     setNewAppointment({ service: appointment.service, date: appointment.date });
   };
 
-  // دالة لتحديث موعد
   const handleUpdateAppointment = async () => {
     const updatedAppointment = {
       service: newAppointment.service,
@@ -123,9 +118,9 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
           {editAppointmentId ? "تعديل الموعد" : "إضافة موعد جديد"}
         </h2>
 
-        {/* نموذج إضافة أو تعديل موعد */}
+        {/* Form for adding/editing appointment */}
         <div className="mb-6">
-          <div className="mb-4 flex items-center">
+          <div className="mb-4 flex flex-col sm:flex-row sm:gap-4">
             <input
               type="text"
               className="border border-gray-300 py-2 px-4 rounded w-full"
@@ -133,8 +128,6 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
               value={newAppointment.service}
               onChange={(e) => setNewAppointment({ ...newAppointment, service: e.target.value })}
             />
-          </div>
-          <div className="mb-4 flex items-center">
             <input
               type="datetime-local"
               className="border border-gray-300 py-2 px-4 rounded w-full"
@@ -146,13 +139,13 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
             onClick={editAppointmentId ? handleUpdateAppointment : handleAddAppointment}
             className={`${
               editAppointmentId ? "bg-blue-500" : "bg-green-500"
-            } text-white py-2 px-4 rounded hover:opacity-90`}
+            } text-white py-2 px-4 rounded hover:opacity-90 w-full sm:w-auto`}
           >
             {editAppointmentId ? "تحديث الموعد" : "إضافة موعد"}
           </button>
         </div>
 
-        {/* نموذج البحث */}
+        {/* Search Form */}
         <div className="mb-4 flex items-center">
           <input
             type="text"
@@ -163,7 +156,7 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
           />
         </div>
 
-        {/* جدول المواعيد */}
+        {/* Appointments Table */}
         {loading ? (
           <p className="text-center text-gray-500">جاري تحميل المواعيد...</p>
         ) : (
