@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
-
+import logo from "../../Imag/أحمد-عماد32-copy.png"
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -20,21 +20,21 @@ const Header = () => {
   }, []);
 
   return (
-    <nav className="bg-blue-700 p-4 shadow-md fixed w-full z-50 top-0">
-      <div className="container mx-auto flex items-center justify-between flex-wrap md:flex-nowrap">
+    <nav className="bg-blue-700  shadow-md fixed w-full z-50 top-0 ">
+      <div className=" pe-2 mx-auto flex items-center justify-between flex-wrap md:flex-nowrap">
         {/* Logo Section */}
-        <Link to="/" className="text-white text-2xl font-semibold">
-          EHC
+        <Link to="/" className="p-2">
+          <img src={logo} alt="" className="w-[50px] h-[40px]" />
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-6 items-center">
+        <div className="hidden md:flex space-x-6 items-center flex-row-reverse">
           <Link to="/" className="text-white hover:text-gray-200">
             رئيسية
           </Link>
 
           {/* Services Dropdown */}
-          <div className="relative" onClick={(e) => e.stopPropagation()}>
+          <div className="relative p-4" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => {
                 closeDropdowns();

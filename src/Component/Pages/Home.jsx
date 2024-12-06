@@ -1,50 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Typography, Button } from "@material-tailwind/react";
-import ph from "../../Imag/WhatsApp Image 2024-11-10 at 20.54.05_95d6df99.png"
+import ph from "../../Imag/WhatsApp Image 2024-11-10 at 20.54.05_95d6df99.png";
+
 const Home = () => {
   return (
-    <>
-      <div className=" min-h-screen flex flex-col items-center justify-center md:flex md:flex-row md:justify-between   pt-[4rem] px-4">
-        {/* Logo Section */}
-        <div className=" text-[3rem] mb-8 md:w-1/2 text-center md:text-start w-screen">
-          <Typography   className="font-bold text-blue-600 text-[2rem] md:text-[3rem] ">
-            Egypt Health Care
-          </Typography>
-          <Typography
-            variant="paragraph"
-            color="gray"
-            className="mt-4 max-w-3xl mx-auto text-lg md:text-xl "
-          >
-            مرحبا بكم في مصر للرعاية الصحية ، شريكك الموثوق للخدمات الطبية
-            والمعلومات الصحية. مهمتنا هي تزويدك بخدمات رعاية صحية عالية الجودة
-            ومشورة الخبراء بشأن الوقاية من الأمراض والنصائح الصحية وإدارة
-            الأدوية. نحن هنا لإرشادك في كل خطوة على الطريق في رحلتك الصحية.
-          </Typography>
-          {/* Call to Action Section */}
-          <div className=" flex justify-center gap-8  md:justify-start">
-            <div className=" mt-6 ms-4">
-              <Link to="/services">
-                <Button color="blue" size="lg" className="rounded-md">
-                  تصفح خدماتنا
-                </Button>
-              </Link>
-            </div>
-            <div className="text-star mt-6">
-              <Link to="/contact">
-                <Button color="blue" size="lg" className="rounded-md">
-                  احجزموعد
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className=" flex justify-center w-full h-full md:w-1/2 ">
-          <img src={ph} alt="" className="w-[80%] md:w-[50%]  "/>
-          
+    <div className="min-h-screen flex flex-col items-center justify-center md:flex md:flex-row-reverse md:justify-between pt-16 px-4">
+      {/* Text Section */}
+      <div className="text-3xl mb-8 md:w-1/2 text-center md:text-end w-full animate-fade-in-up">
+        <h1 className="font-bold text-blue-600 text-4xl md:text-5xl">
+          Egypt Health Care
+        </h1>
+        <p className="mt-4 text-gray-600 text-lg md:text-xl leading-relaxed">
+          مرحبا بكم في مصر للرعاية الصحية ، شريكك الموثوق للخدمات الطبية
+          والمعلومات الصحية. مهمتنا هي تزويدك بخدمات رعاية صحية عالية الجودة
+          ومشورة الخبراء بشأن الوقاية من الأمراض والنصائح الصحية وإدارة الأدوية.
+          نحن هنا لإرشادك في كل خطوة على الطريق في رحلتك الصحية.
+        </p>
+        {/* Call-to-Action Buttons */}
+        <div className="flex justify-center gap-4 mt-6 md:justify-end">
+          <Link to="/services">
+            <button className="bg-blue-600 text-[20px] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+              تصفح خدماتنا
+            </button>
+          </Link>
+          <Link to="/contact">
+            <button className="bg-blue-600 text-[20px] text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+              احجز موعد
+            </button>
+          </Link>
         </div>
       </div>
-    </>
+
+      {/* Image Section */}
+      <div className="flex justify-center w-full h-full md:w-1/2 animate-scale-in">
+        <img src={ph} alt="Healthcare" className="w-2/5 md:w-1/2" />
+      </div>
+      
+    </div>
   );
 };
 
