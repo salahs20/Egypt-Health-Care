@@ -40,9 +40,8 @@ const HeaderAdmin = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 items-center flex-row-reverse">
-          <div className="relative"></div>
           <Link to="/" className="text-white hover:text-gray-200">
-            <IoHomeOutline className="text-xl text-" />
+            <IoHomeOutline className="text-xl " />
           </Link>
         </div>
 
@@ -77,7 +76,7 @@ const HeaderAdmin = () => {
             className="block text-white py-2 px-4 hover:bg-blue-600"
             onClick={handleMobileItemClick}
           >
-            رئيسية
+       <IoHomeOutline className="text-xl " />
           </Link>
         </div>
       </div>
