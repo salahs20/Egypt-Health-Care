@@ -3,6 +3,7 @@ import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import logo from "../../Imag/أحمد-عماد32-copy.png";
 import Avatar from "./Avatar";
+import { IoHomeOutline } from "react-icons/io5";
 
 const HeaderAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +42,7 @@ const HeaderAdmin = () => {
         <div className="hidden md:flex space-x-6 items-center flex-row-reverse">
           <div className="relative"></div>
           <Link to="/" className="text-white hover:text-gray-200">
-            رئيسية
+            <IoHomeOutline className="text-xl text-" />
           </Link>
         </div>
 
