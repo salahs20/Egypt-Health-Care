@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { BiLogOut } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
 const Avatar = ({handleMobileItemClick}) => {
@@ -59,16 +60,7 @@ const Avatar = ({handleMobileItemClick}) => {
             >
               الملف الشخصي
             </Link>
-            <Link
-            to="/adminDashboard"
-              className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              onClick={() => {
-                handleMobileItemClick(false)
-                setIsOpen(false); // غلق القائمة بعد الضغط
-              }}
-            >
-              الإعدادات
-            </Link>
+           
             <li
               className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
               onClick={() => {
@@ -76,7 +68,10 @@ const Avatar = ({handleMobileItemClick}) => {
                 setIsOpen(false); // غلق القائمة بعد الضغط
               }}
             >
-              تسجيل الخروج
+            <div className=" flex  items-center gap-1">
+                        <BiLogOut />
+                          <span> تسجيل الخروج</span>
+                        </div>
             </li>
           </ul>
         </div>

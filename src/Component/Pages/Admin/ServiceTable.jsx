@@ -1,64 +1,47 @@
 import React, { useState } from "react";
 
-const ServiceTable = ({ services = [], loading, setServices }) => {
+const ServiceTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [editService, setEditService] = useState(null);
+
+  // Static services data
+  const [services, setServices] = useState([
+    { id: 1, name: "خدمة 1" },
+    { id: 2, name: "خدمة 2" },
+    { id: 3, name: "خدمة 3" },
+  ]);
 
   const filteredServices = services.filter((service) =>
     service.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDeleteService = async (serviceId) => {
+  const handleDeleteService = (serviceId) => {
     if (window.confirm("هل أنت متأكد من أنك تريد حذف هذه الخدمة؟")) {
-      await fetch(`http://localhost:3000/services/${serviceId}`, {
-        method: "DELETE",
-      });
       setServices(services.filter((service) => service.id !== serviceId));
     }
   };
 
-  const handleAddService = async () => {
-    const newService = { name: "خدمة جديدة" };
-    const res = await fetch("http://localhost:3000/services", {
-      method: "POST",
-      body: JSON.stringify(newService),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const addedService = await res.json();
-    setServices([...services, addedService]);
+  const handleAddService = () => {
+    const newService = { id: services.length + 1, name: "خدمة جديدة" };
+    setServices([...services, newService]);
   };
 
   const handleEditService = (service) => {
     setEditService(service);
   };
 
-  const handleSaveEdit = async () => {
-    const res = await fetch(
-      `http://localhost:3000/services/${editService.id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(editService),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const updatedService = await res.json();
+  const handleSaveEdit = () => {
     setServices(
       services.map((service) =>
-        service.id === updatedService.id ? updatedService : service
+        service.id === editService.id ? editService : service
       )
     );
     setEditService(null);
   };
 
-  if (loading) return <p className="text-center text-gray-500">جاري تحميل البيانات...</p>;
-
   return (
-    <div className="pt-16 pb-8 px-4">
-      <div className="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div className="pt-16 pb-8 px-4 md:ps-[16rem]">
+      <div className="bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">
           إدارة الخدمات
         </h2>

@@ -1,71 +1,72 @@
 import React, { useState } from "react";
 
-const UserTable = ({ users = [], loading, setUsers }) => {
+const UserTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [newUser, setNewUser] = useState({ name: "", email: "", phone: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const initialUsers = [
+    { id: 1, name: "صلاح", email: "salahelzeini55.com", phone: "01126250856", isAdmin: true },
+    { id: 2, name: "سارة", email: "sara@example.com", phone: "987654321", isAdmin: false },
+    { id: 3, name: "محمود", email: "mahmoud@example.com", phone: "555555555", isAdmin: false },
+  ];
+
+  const [users, setUsers] = useState(initialUsers);
 
   // تصفية المستخدمين
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDeleteUser = async (userId) => {
+  // إضافة مستخدم جديد
+  const handleAddUser = () => {
+    if (!newUser.name || !newUser.email || !newUser.phone) {
+      setErrorMessage("جميع الحقول مطلوبة.");
+      return;
+    }
+
+    const newUserData = {
+      id: users.length + 1,
+      name: newUser.name,
+      email: newUser.email,
+      phone: newUser.phone,
+      isAdmin: false,
+    };
+
+    setUsers([...users, newUserData]);
+    setNewUser({ name: "", email: "", phone: "" });
+    setErrorMessage("");
+  };
+
+  // حذف المستخدم
+  const handleDeleteUser = (userId) => {
     if (window.confirm("هل أنت متأكد من أنك تريد حذف هذا المستخدم؟")) {
-      await fetch(`http://localhost:3000/users/${userId}`, { method: "DELETE" });
       setUsers(users.filter((user) => user.id !== userId));
     }
   };
 
-  const handleAddUser = async () => {
-    const newUserData = {
-      name: newUser.name,
-      email: newUser.email,
-      phone: newUser.phone,
-    };
-
-    const res = await fetch("http://localhost:3000/users", {
-      method: "POST",
-      body: JSON.stringify(newUserData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const addedUser = await res.json();
-    setUsers([...users, addedUser]);
-    setNewUser({ name: "", email: "", phone: "" });
-  };
-
-  const handleToggleAdmin = async (userId) => {
+  // تبديل صلاحيات الأدمن
+  const handleToggleAdmin = (userId) => {
     const updatedUsers = users.map((user) =>
       user.id === userId ? { ...user, isAdmin: !user.isAdmin } : user
     );
     setUsers(updatedUsers);
-
-    const userToUpdate = updatedUsers.find((user) => user.id === userId);
-
-    await fetch(`http://localhost:3000/users/${userId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ isAdmin: userToUpdate.isAdmin }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
   };
 
-  if (loading) return <p className="text-center text-gray-500">جاري تحميل البيانات...</p>;
-
   return (
-    <div className="pt-16 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div className="pt-16 pb-8 px-4 sm:px-6 lg:px-8 ">
+      <div className=" md:ps-[16rem] mx-auto bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">إدارة المستخدمين</h2>
+
+        {/* رسالة الخطأ */}
+        {errorMessage && <p className="text-red-500 mb-4 text-center">{errorMessage}</p>}
 
         {/* إضافة مستخدم جديد */}
         <div className="mb-3">
-          <div className="mb-4 flex items-center ">
+          <div className="mb-4 flex items-center">
             <input
               type="text"
-              className="border border-gray-300 py-2 px-4 rounded w-full "
+              className="border border-gray-300 py-2 px-4 rounded w-full"
               placeholder="اسم المستخدم"
               value={newUser.name}
               onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
@@ -74,7 +75,7 @@ const UserTable = ({ users = [], loading, setUsers }) => {
           <div className="mb-4 flex items-center">
             <input
               type="email"
-              className="border border-gray-300 py-2 px-4 rounded w-full "
+              className="border border-gray-300 py-2 px-4 rounded w-full"
               placeholder="البريد الإلكتروني"
               value={newUser.email}
               onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
@@ -83,7 +84,7 @@ const UserTable = ({ users = [], loading, setUsers }) => {
           <div className="mb-4 flex items-center">
             <input
               type="tel"
-              className="border border-gray-300 py-2 px-4 rounded w-full "
+              className="border border-gray-300 py-2 px-4 rounded w-full"
               placeholder="رقم الهاتف"
               value={newUser.phone}
               onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}

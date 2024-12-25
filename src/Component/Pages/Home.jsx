@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ph from "../../Imag/WhatsApp Image 2024-11-10 at 20.54.05_95d6df99.png";
+import Scrollbar from "../Component/Scrolbar";
 
 const Home = () => {
   return (
+    <>
     <div className="min-h-screen flex flex-col items-center justify-center md:flex md:flex-row-reverse md:justify-between pt-16 px-4">
       {/* Text Section */}
       <div className="text-3xl mb-8 md:w-1/2 text-center md:text-end w-full animate-fade-in-up">
@@ -33,10 +35,12 @@ const Home = () => {
 
       {/* Image Section */}
       <div className="flex justify-center w-full h-full md:w-1/2 animate-scale-in">
-        <img src={ph} alt="Healthcare" className="w-2/5 md:w-2/5" />
+        <img src={ph} alt="Healthcare" className="w-2/5 md:w-3/6 " />
       </div>
       
     </div>
+<Scrollbar/>
+    </>
   );
 };
 

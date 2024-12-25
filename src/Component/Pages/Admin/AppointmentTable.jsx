@@ -1,61 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
+const AppointmentTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [newAppointment, setNewAppointment] = useState({
-    service: "",
-    date: "",
-  });
+  const [newAppointment, setNewAppointment] = useState({ service: "", date: "" });
   const [editAppointmentId, setEditAppointmentId] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Static appointments data
+  const [appointments, setAppointments] = useState([
+    { id: 1, service: "خدمة 1", date: "2024-12-25T10:00" },
+    { id: 2, service: "خدمة 2", date: "2024-12-26T14:00" },
+    { id: 3, service: "خدمة 3", date: "2024-12-27T09:30" },
+  ]);
 
   const filteredAppointments = appointments.filter((appointment) =>
     appointment.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
     new Date(appointment.date).toLocaleString().includes(searchTerm)
   );
 
-  const handleAddAppointment = async () => {
-    const newAppointmentData = {
-      service: newAppointment.service,
-      date: newAppointment.date,
-    };
-
-    try {
-      const res = await fetch("http://localhost:3000/appointments", {
-        method: "POST",
-        body: JSON.stringify(newAppointmentData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error("فشل إضافة الموعد");
-      }
-
-      const addedAppointment = await res.json();
-      setAppointments((prevAppointments) => [...prevAppointments, addedAppointment]);
-      setNewAppointment({ service: "", date: "" });
-    } catch (error) {
-      console.error("حدث خطأ أثناء إضافة الموعد:", error);
+  const handleAddAppointment = () => {
+    if (!newAppointment.service || !newAppointment.date) {
+      setErrorMessage("يرجى إدخال الخدمة والتاريخ.");
+      return;
     }
+
+    const newAppointmentData = { id: appointments.length + 1, service: newAppointment.service, date: newAppointment.date };
+    setAppointments([...appointments, newAppointmentData]);
+    setNewAppointment({ service: "", date: "" });
+    setErrorMessage("");
   };
 
-  const handleDeleteAppointment = async (id) => {
-    try {
-      const res = await fetch(`http://localhost:3000/appointments/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) {
-        throw new Error("فشل حذف الموعد");
-      }
-
-      setAppointments((prevAppointments) =>
-        prevAppointments.filter((appointment) => appointment.id !== id)
-      );
-    } catch (error) {
-      console.error("حدث خطأ أثناء حذف الموعد:", error);
-    }
+  const handleDeleteAppointment = (id) => {
+    setAppointments(appointments.filter((appointment) => appointment.id !== id));
   };
 
   const handleEditClick = (appointment) => {
@@ -63,62 +39,34 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
     setNewAppointment({ service: appointment.service, date: appointment.date });
   };
 
-  const handleUpdateAppointment = async () => {
-    const updatedAppointment = {
-      service: newAppointment.service,
-      date: newAppointment.date,
-    };
-
-    try {
-      const res = await fetch(`http://localhost:3000/appointments/${editAppointmentId}`, {
-        method: "PUT",
-        body: JSON.stringify(updatedAppointment),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error("فشل تحديث الموعد");
-      }
-
-      const updatedData = await res.json();
-
-      setAppointments((prevAppointments) =>
-        prevAppointments.map((appointment) =>
-          appointment.id === editAppointmentId ? updatedData : appointment
-        )
-      );
-
-      setEditAppointmentId(null);
-      setNewAppointment({ service: "", date: "" });
-    } catch (error) {
-      console.error("حدث خطأ أثناء تعديل الموعد:", error);
+  const handleUpdateAppointment = () => {
+    if (!newAppointment.service || !newAppointment.date) {
+      setErrorMessage("يرجى إدخال الخدمة والتاريخ.");
+      return;
     }
+
+    const updatedAppointment = { id: editAppointmentId, service: newAppointment.service, date: newAppointment.date };
+    setAppointments(
+      appointments.map((appointment) =>
+        appointment.id === editAppointmentId ? updatedAppointment : appointment
+      )
+    );
+    setEditAppointmentId(null);
+    setNewAppointment({ service: "", date: "" });
+    setErrorMessage("");
   };
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/appointments");
-        const data = await res.json();
-        setAppointments(data.appointments);
-      } catch (error) {
-        console.error("حدث خطأ أثناء تحميل المواعيد:", error);
-      }
-    };
-
-    fetchAppointments();
-  }, [setAppointments]);
-
   return (
-    <div className="pt-16 pb-8 px-4">
-      <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    <div className="pt-16 pb-8 px-4 md:ps-[16rem]">
+      <div className=" mx-auto bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">
           {editAppointmentId ? "تعديل الموعد" : "إضافة موعد جديد"}
         </h2>
 
-        {/* Form for adding/editing appointment */}
+        {/* Error Message */}
+        {errorMessage && <p className="text-red-500 mb-4 text-center">{errorMessage}</p>}
+
+        {/* Form */}
         <div className="mb-6">
           <div className="mb-4 flex flex-col sm:flex-row sm:gap-4">
             <input
@@ -145,7 +93,7 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
           </button>
         </div>
 
-        {/* Search Form */}
+        {/* Search */}
         <div className="mb-4 flex items-center">
           <input
             type="text"
@@ -157,25 +105,21 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
         </div>
 
         {/* Appointments Table */}
-        {loading ? (
-          <p className="text-center text-gray-500">جاري تحميل المواعيد...</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
-              <thead className="bg-blue-100 text-blue-700">
-                <tr>
-                  <th className="py-3 px-4 text-left">الخدمة</th>
-                  <th className="py-3 px-4 text-left">التاريخ والوقت</th>
-                  <th className="py-3 px-4 text-center">الإجراءات</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredAppointments.map((appointment) => (
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+            <thead className="bg-blue-100 text-blue-700">
+              <tr>
+                <th className="py-3 px-4 text-left">الخدمة</th>
+                <th className="py-3 px-4 text-left">التاريخ والوقت</th>
+                <th className="py-3 px-4 text-center">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredAppointments.length > 0 ? (
+                filteredAppointments.map((appointment) => (
                   <tr key={appointment.id} className="border-b">
                     <td className="py-3 px-4">{appointment.service}</td>
-                    <td className="py-3 px-4">
-                      {new Date(appointment.date).toLocaleString()}
-                    </td>
+                    <td className="py-3 px-4">{new Date(appointment.date).toLocaleString()}</td>
                     <td className="py-3 px-4 text-center flex gap-2 justify-center">
                       <button
                         onClick={() => handleEditClick(appointment)}
@@ -191,11 +135,17 @@ const AppointmentTable = ({ appointments = [], loading, setAppointments }) => {
                       </button>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" className="text-center py-3 text-gray-500">
+                    لا توجد مواعيد.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

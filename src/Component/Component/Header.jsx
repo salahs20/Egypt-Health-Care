@@ -3,10 +3,12 @@ import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import logo from "../../Imag/أحمد-عماد32-copy.png";
 import Avatar from "./Avatar";
+import { TbLogin2 } from "react-icons/tb";
+import { IoHomeOutline } from "react-icons/io5";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);  // حالة لفتح/إغلاق الدروب داون
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // حالة لفتح/إغلاق الدروب داون
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMedicalInfoOpen, setIsMedicalInfoOpen] = useState(false);
 
@@ -16,13 +18,13 @@ const Header = () => {
   };
 
   const handleMobileItemClick = () => {
-    setIsOpen(false); 
-    closeDropdowns(); 
+    setIsOpen(false);
+    closeDropdowns();
   };
 
   useEffect(() => {
     const handleClickOutside = () => {
-      if (isDropdownOpen) setIsDropdownOpen(false);  // إغلاق الـ dropdown إذا تم النقر خارجها
+      if (isDropdownOpen) setIsDropdownOpen(false); // إغلاق الـ dropdown إذا تم النقر خارجها
     };
     window.addEventListener("click", handleClickOutside);
 
@@ -34,38 +36,20 @@ const Header = () => {
       <div className="pe-3 ps-3 mx-auto flex items-center justify-between flex-wrap md:flex-nowrap">
         {/* Logo Section */}
         <Link to="/" className="p-2">
-          <img src={logo} alt="" className="w-[50px] h-[40px]" />
+          <img src={logo} alt="" className="w-[50px] h-[35px]" />
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 items-center flex-row-reverse">
           <div className="relative">
             {/* Avatar and Dropdown */}
-            <Avatar onClick={() => setIsDropdownOpen(!isDropdownOpen)} />
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                <Link
-                  to="/profile"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  الملف الشخصي
-                </Link>
-                <Link
-                  to="/logout"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  تسجيل الخروج
-                </Link>
-              </div>
-            )}
+            <div className="flex justify-end p-4 ">
+              <Avatar handleMobileItemClick={handleMobileItemClick} />
+            </div>
           </div>
-
           <Link to="/" className="text-white hover:text-gray-200">
-            رئيسية
+            <IoHomeOutline className="text-xl text-" />
           </Link>
-
           {/* Services Dropdown */}
           <div className="relative " onClick={(e) => e.stopPropagation()}>
             <button
@@ -104,7 +88,6 @@ const Header = () => {
               </div>
             )}
           </div>
-
           {/* Medical Info Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
@@ -143,18 +126,28 @@ const Header = () => {
               </div>
             )}
           </div>
-
           <Link to="/services" className="text-white hover:text-gray-200">
             خدماتنا
           </Link>
           <Link to="/contact" className="text-white hover:text-gray-200">
             احجز موعد
           </Link>
-          <Link to="/Login" className="text-white hover:text-gray-200">
-            تسجيل الدخول
-          </Link>{" "}
+          {/* <Link to="login">
+          <div className="flex  items-center gap-1 text-white">
+            <TbLogin2 />
+            <span>تسجيل الدخول</span>
+          </div>
+          </Link>
+          
           <Link to="/signup" className="text-white hover:text-gray-200">
             انشاء حساب
+          </Link> */}
+          <Link
+            to="/admin/*"
+            className="block text-white py-2 px-4 hover:bg-blue-600"
+            onClick={handleMobileItemClick}
+          >
+            Admin{" "}
           </Link>
         </div>
 
@@ -185,7 +178,7 @@ const Header = () => {
           } md:hidden mt-2 w-full bg-blue-700`}
         >
           <div className="flex justify-end p-4 ">
-            <Avatar  handleMobileItemClick={handleMobileItemClick}/>
+            <Avatar handleMobileItemClick={handleMobileItemClick} />
           </div>
 
           <Link
@@ -193,7 +186,7 @@ const Header = () => {
             className="block text-white py-2 px-4 hover:bg-blue-600"
             onClick={handleMobileItemClick}
           >
-            رئيسية
+            <IoHomeOutline className="text-xl text-" />
           </Link>
 
           {/* Mobile Services Dropdown */}
@@ -286,12 +279,15 @@ const Header = () => {
           >
             احجز موعد
           </Link>
-          <Link
+          {/* <Link
             to="/Login"
             className="block text-white py-2 px-4 hover:bg-blue-600"
             onClick={handleMobileItemClick}
           >
-            تسجيل الدخول
+            <div className="flex  items-center gap-1 text-white">
+              <TbLogin2 />
+              <span>تسجيل الدخول</span>
+            </div>
           </Link>
           <Link
             to="/signup"
@@ -299,6 +295,13 @@ const Header = () => {
             onClick={handleMobileItemClick}
           >
             انشاء حساب
+          </Link> */}
+          <Link
+            to="/admin/*"
+            className="block text-white py-2 px-4 hover:bg-blue-600"
+            onClick={handleMobileItemClick}
+          >
+            Admin{" "}
           </Link>
         </div>
       </div>
