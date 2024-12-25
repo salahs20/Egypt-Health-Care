@@ -6,7 +6,7 @@ const UserTable = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const initialUsers = [
-    { id: 1, name: "صلاح", email: "salahelzeini55.com", phone: "01126250856", isAdmin: true },
+    { id: 1, name: "صلاح", email: "salahelzeini55@gmail.com", phone: "01126250856", isAdmin: true },
     { id: 2, name: "سارة", email: "sara@example.com", phone: "987654321", isAdmin: false },
     { id: 3, name: "محمود", email: "mahmoud@example.com", phone: "555555555", isAdmin: false },
   ];

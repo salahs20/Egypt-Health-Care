@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 const UserDashboard = () => {
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
+  const [name, setName] = useState("Salah Mohamed");
+  const [email, setEmail] = useState("salahelzeini55@gmail.com");
   const [password, setPassword] = useState("");
   const [newAppointment, setNewAppointment] = useState("");
   const [error, setError] = useState("");
