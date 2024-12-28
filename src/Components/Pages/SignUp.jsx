@@ -8,6 +8,10 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e) => {
+
+
+
+    
     e.preventDefault();
     setIsSubmitting(true);
     setError('');

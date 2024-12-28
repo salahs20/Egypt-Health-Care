@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
-import logo from "../../Imag/أحمد-عماد32-copy.png";
-import Avatar from "./Avatar";
+import logo from "../../Imag/logo.png"
+
 import { IoHomeOutline } from "react-icons/io5";
 
 const HeaderAdmin = () => {

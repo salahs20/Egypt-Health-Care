@@ -12,7 +12,6 @@ const AdminLayout = () => {
     <>
       <HeaderAdmin />
       <SideBar />
-
       <Routes future={{ v7_startTransition: true }}>
         <Route path="*/" element={<ServiceTable />} />
         <Route path="/appointment" element={<AppointmentTable />} />

@@ -1,0 +1,62 @@
+{
+  "doctors": [
+    {
+      "age": "50",
+      "name": "ahmed"
+    }
+  ],
+  "users": [
+    {
+      "email": "salah1111@gmail.com",
+      "gender": "male",
+      "id": "1",
+      "name": "Salah",
+      "password": 123456,
+      "role": "admin"
+    },
+    {
+      "email": "mohamed1111@gmail.com",
+      "gender": "",
+      "id": "2",
+      "name": "mohamed",
+      "password": "111111",
+      "role": "user"
+    },
+    {
+      "email": "amin1111@gmail.com",
+      "gender": "",
+      "id": "3",
+      "name": "amin",
+      "password": "111111",
+      "role": "admin"
+    },
+    {
+      "email": "roaa1111@gmail.com",
+      "gender": "female",
+      "id": "3b90c40d-adbc-4f43-9454-4c9eaba48452",
+      "name": "roaa ",
+      "password": "123456789RR",
+      "role": "user"
+    }
+  ],
+  "pharmacy": [
+    {
+      "name": "Doaa",
+      "id": "25",
+      "email": "doaa@gmail.com",
+      "gender": "female"
+    },
+    {
+      "name": "Hala",
+      "id": "26",
+      "email": "hala@gmail.com",
+      "gender": "female"
+    },
+    {
+      "name": "Amr",
+      "id": "27",
+      "email": "amr@gmail.com",
+      "gender": "male"
+    }
+  ]
+}

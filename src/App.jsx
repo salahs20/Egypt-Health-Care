@@ -1,8 +1,7 @@
 import React from "react";
-import Header from "./Component/Component/Header";
-import UserLauout from "./Component/UserLayout/UserLauout";
+import UserLauout from "./Components/UserLayout/UserLauout";
 import { Route, Routes } from "react-router-dom";
-import AdminLayout from "./Component/AdminLayout/AdminLayout";
+import AdminLayout from "./Components/AdminLayout/AdminLayout";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 

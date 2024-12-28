@@ -9,6 +9,12 @@ const Login = () => {
     // Add login logic here
     console.log("Email:", email);
     console.log("Password:", password);
+     
+    
+
+
+
+
   };
 
   return (

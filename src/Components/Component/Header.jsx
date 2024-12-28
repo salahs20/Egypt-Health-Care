@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
-import logo from "../../Imag/أحمد-عماد32-copy.png";
+import logo from "../../Imag/logo.png";
 import Avatar from "./Avatar";
 import { TbLogin2 } from "react-icons/tb";
 import { IoHomeOutline } from "react-icons/io5";
@@ -132,7 +132,7 @@ const Header = () => {
           <Link to="/contact" className="text-white hover:text-gray-200">
             احجز موعد
           </Link>
-          {/* <Link to="login">
+          <Link to="login">
           <div className="flex  items-center gap-1 text-white">
             <TbLogin2 />
             <span>تسجيل الدخول</span>
@@ -141,7 +141,7 @@ const Header = () => {
           
           <Link to="/signup" className="text-white hover:text-gray-200">
             انشاء حساب
-          </Link> */}
+          </Link>
           <Link
             to="/admin/*"
             className="block text-white py-2 px-4 hover:bg-blue-600"
@@ -279,7 +279,7 @@ const Header = () => {
           >
             احجز موعد
           </Link>
-          {/* <Link
+          <Link
             to="/Login"
             className="block text-white py-2 px-4 hover:bg-blue-600"
             onClick={handleMobileItemClick}
@@ -295,7 +295,7 @@ const Header = () => {
             onClick={handleMobileItemClick}
           >
             انشاء حساب
-          </Link> */}
+          </Link>
           <Link
             to="/admin/*"
             className="block text-white py-2 px-4 hover:bg-blue-600"
