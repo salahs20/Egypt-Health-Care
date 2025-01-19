@@ -1,65 +1,93 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const UserTable = () => {
+  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [newUser, setNewUser] = useState({ name: "", email: "", phone: "" });
   const [errorMessage, setErrorMessage] = useState("");
 
-  const initialUsers = [
-    { id: 1, name: "صلاح", email: "salahelzeini55@gmail.com", phone: "01126250856", isAdmin: true },
-    { id: 2, name: "سارة", email: "sara@example.com", phone: "987654321", isAdmin: false },
-    { id: 3, name: "محمود", email: "mahmoud@example.com", phone: "555555555", isAdmin: false },
-  ];
+  const apiUrl = import.meta.env.VITE_AllUsers; // تعديل URL بناءً على API الخاص بك
+  const apiUrl2 = import.meta.env.VITE_Url; // تعديل URL بناءً على API الخاص بك
 
-  const [users, setUsers] = useState(initialUsers);
+  // جلب جميع المستخدمين
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(`${apiUrl2}/signup`);
+        setUsers(response.data); 
+        console.log(response.data);
+        // افترض أن البيانات تأتي في response.data
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setErrorMessage("حدث خطأ أثناء تحميل البيانات.");
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  // إضافة مستخدم جديد
+  const handleAddUser = async () => {
+    if (!newUser.name || !newUser.email || !newUser.phone) {
+      setErrorMessage("جميع الحقول مطلوبة.");
+      return;
+    }
+    try {
+      const response = await axios.post(apiUrl, newUser);
+      setUsers([...users, response.data]); // إضافة المستخدم الجديد
+      setNewUser({ name: "", email: "", phone: "" });
+      setErrorMessage("");
+    } catch (error) {
+      console.error("Error adding user:", error);
+      setErrorMessage("تعذر إضافة المستخدم.");
+    }
+  };
+
+  // حذف مستخدم
+  const handleDeleteUser = async (userId) => {
+    if (window.confirm("هل أنت متأكد من أنك تريد حذف هذا المستخدم؟")) {
+      try {
+        await axios.delete(`${apiUrl2}/signup/${userId}`);
+        setUsers(users.filter((user) => user.id !== userId)); // إزالة المستخدم من القائمة
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        setErrorMessage("تعذر حذف المستخدم.");
+      }
+    }
+  };
+
+  // تعديل صلاحيات الأدمن
+  const handleToggleAdmin = async (userId) => {
+    try {
+      const updatedUser = users.find((user) => user.id === userId);
+      updatedUser.isAdmin = !updatedUser.isAdmin;
+
+      const response = await axios.put(`${apiUrl2}/signup/${userId}`, updatedUser);
+      setUsers(
+        users.map((user) => (user.id === userId ? response.data : user))
+      );
+    } catch (error) {
+      console.error("Error updating user:", error);
+      setErrorMessage("تعذر تعديل صلاحيات المستخدم.");
+    }
+  };
 
   // تصفية المستخدمين
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // إضافة مستخدم جديد
-  const handleAddUser = () => {
-    if (!newUser.name || !newUser.email || !newUser.phone) {
-      setErrorMessage("جميع الحقول مطلوبة.");
-      return;
-    }
-
-    const newUserData = {
-      id: users.length + 1,
-      name: newUser.name,
-      email: newUser.email,
-      phone: newUser.phone,
-      isAdmin: false,
-    };
-
-    setUsers([...users, newUserData]);
-    setNewUser({ name: "", email: "", phone: "" });
-    setErrorMessage("");
-  };
-
-  // حذف المستخدم
-  const handleDeleteUser = (userId) => {
-    if (window.confirm("هل أنت متأكد من أنك تريد حذف هذا المستخدم؟")) {
-      setUsers(users.filter((user) => user.id !== userId));
-    }
-  };
-
-  // تبديل صلاحيات الأدمن
-  const handleToggleAdmin = (userId) => {
-    const updatedUsers = users.map((user) =>
-      user.id === userId ? { ...user, isAdmin: !user.isAdmin } : user
-    );
-    setUsers(updatedUsers);
-  };
-
   return (
-    <div className="pt-16 pb-8 px-4 sm:px-6 lg:px-8 ">
-      <div className=" md:ps-[16rem] mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">إدارة المستخدمين</h2>
+    <div className="pt-16 pb-8 px-4 sm:px-6 lg:px-8">
+      <div className="md:ps-[16rem] mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">
+          إدارة المستخدمين
+        </h2>
 
         {/* رسالة الخطأ */}
-        {errorMessage && <p className="text-red-500 mb-4 text-center">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="text-red-500 mb-4 text-center">{errorMessage}</p>
+        )}
 
         {/* إضافة مستخدم جديد */}
         <div className="mb-3">
@@ -78,7 +106,9 @@ const UserTable = () => {
               className="border border-gray-300 py-2 px-4 rounded w-full"
               placeholder="البريد الإلكتروني"
               value={newUser.email}
-              onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+              onChange={(e) =>
+                setNewUser({ ...newUser, email: e.target.value })
+              }
             />
           </div>
           <div className="mb-4 flex items-center">
@@ -87,7 +117,9 @@ const UserTable = () => {
               className="border border-gray-300 py-2 px-4 rounded w-full"
               placeholder="رقم الهاتف"
               value={newUser.phone}
-              onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}
+              onChange={(e) =>
+                setNewUser({ ...newUser, phone: e.target.value })
+              }
             />
           </div>
           <button

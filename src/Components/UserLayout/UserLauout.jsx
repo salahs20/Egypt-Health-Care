@@ -8,12 +8,20 @@ import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
 import UserDashboard from "../Pages/User/UserDashboard";
 
-import UserTable from "../Pages/Admin/UserTable";
-import AppointmentTable from "../Pages/Admin/AppointmentTable";
-import ServiceTable from "../Pages/Admin/ServiceTable";
+// import UserTable from "../Pages/Admin/UserTable";
+// import AppointmentTable from "../Pages/Admin/AppointmentTable";
+// import ServiceTable from "../Pages/Admin/ServiceTable";
 import Header from "../Component/Header";
 
 const UserLauout = () => {
+
+
+
+
+
+
+
+  
   return (
     <>
       <Header />
@@ -25,9 +33,9 @@ const UserLauout = () => {
         <Route path="/signup" element={<SignUp />} exact />
         <Route path="/userDashboard" element={<UserDashboard />} exact />
 
-        <Route path="/UserTable" element={<UserTable />} exact />
+        {/* <Route path="/UserTable" element={<UserTable />} exact />
         <Route path="/AppointmentTable" element={<AppointmentTable />} exact />
-        <Route path="/ServiceTable" element={<ServiceTable />} exact />
+        <Route path="/ServiceTable" element={<ServiceTable />} exact /> */}
 
         <Route path="*" element={<NotFound />} />
       </Routes>

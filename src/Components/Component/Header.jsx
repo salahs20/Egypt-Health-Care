@@ -142,13 +142,7 @@ const Header = () => {
           <Link to="/signup" className="text-white hover:text-gray-200">
             انشاء حساب
           </Link>
-          <Link
-            to="/admin/*"
-            className="block text-white py-2 px-4 hover:bg-blue-600"
-            onClick={handleMobileItemClick}
-          >
-            Admin{" "}
-          </Link>
+         
         </div>
 
         {/* Mobile Menu Toggle Button */}
@@ -296,13 +290,7 @@ const Header = () => {
           >
             انشاء حساب
           </Link>
-          <Link
-            to="/admin/*"
-            className="block text-white py-2 px-4 hover:bg-blue-600"
-            onClick={handleMobileItemClick}
-          >
-            Admin{" "}
-          </Link>
+         
         </div>
       </div>
     </nav>

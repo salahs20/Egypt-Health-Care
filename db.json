@@ -1,70 +1,141 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "أحمد علي",
-      "email": "ahmed@example.com",
-      "role": "مستخدم"
-    },
-    {
       "id": 2,
       "name": "فاطمة محمد",
       "email": "fatima@example.com",
-      "role": "مستخدم"
+      "role": "مستخدم",
+      "isAdmin": false
+    },
+    {
+      "name": "Salah Mohamed ",
+      "email": "salahelzeini@gmail.com",
+      "phone": "01126250856",
+      "password": "123456",
+      "token": "abcdef123456",
+      "id": 3,
+      "isAdmin": true
+    },
+    {
+      "name": "Salah Mohamed Alzeini",
+      "email": "sm8353705@gmail.com",
+      "password": "123456789",
+      "phone": "01126250856",
+      "id": 5
+    }
+  ],
+  "login": [
+    {
+      "name": "Salah Mohamed ",
+      "email": "salahelzeini@gmail.com",
+      "phone": "01126250856",
+      "password": "123456",
+      "token": "abcdef123456",
+      "id": 3,
+      "isAdmin": true
+    },
+    {
+      "email": "salahelzeini@gmail.com",
+      "password": "123456",
+      "id": 4
+    },
+    {
+      "email": "salahelzeini@gmail.com",
+      "password": "123456",
+      "id": 5
+    }
+  ],
+  "signup": [
+    {
+      "name": "Salah Mohamed ",
+      "email": "salahelzeini@gmail.com",
+      "phone": "01126250856",
+      "password": "123456",
+      "token": "abcdef123456",
+      "id": 3,
+      "isAdmin": true
+    },
+    {
+      "name": "Salah",
+      "email": "sm8353705@gmail.com",
+      "password": "123456789",
+      "phone": "01126250856",
+      "isAdmin": false,
+      "id": 4
     }
   ],
   "appointments": [
     {
-      "service": "rrrr",
+      "service": "جراحة",
       "date": "2024-12-06T22:30",
       "id": 1
     },
     {
-      "service": "",
-      "date": "",
+      "service": "رعاية اسنان",
+      "date": "2024-12-29T18:52",
       "id": 2
     },
     {
-      "service": "",
-      "date": "",
+      "service": "استشارة طبية",
+      "date": "2024-12-29T18:52",
       "id": 3
     },
     {
-      "service": "",
-      "date": "",
+      "service": "تشخيص الامراد",
+      "date": "2024-12-29T18:52",
       "id": 4
     },
     {
-      "service": "",
-      "date": "",
+      "service": "مرعاية صحية ",
+      "date": "2024-12-29T18:53",
       "id": 5
     },
     {
-      "service": "",
-      "date": "",
+      "service": "علاج طبيعي",
+      "date": "2024-12-29T18:53",
       "id": 6
     }
   ],
   "services": [
     {
-      "id": 2,
-      "name": "رعاية أسنان"
-    },
-    {
       "id": 3,
-      "name": "جراحة"
+      "title": "استشارة طبية ",
+      "description": "نقدم استشارات طبية مع مجموعة من الأطباء المتخصصين\n"
     },
     {
-      "name": "جلدية",
-      "id": 4
+      "title": "رعاية اسنان ",
+      "id": 4,
+      "description": "خدمات رعاية أسنان تشمل الفحوصات والعلاجات المختلفة\n"
     },
     {
-      "name": "خدمة جديدة",
+      "title": "جراحة",
+      "description": "نحن نقدم خدمات جراحية مع أفضل الأطباء والجراحين",
       "id": 5
     },
     {
-      "name": "خدمة جديدة",
+      "title": "علاج طبيعي",
+      "description": "خدمات العلاج الطبيعي لمساعدتك في التعافي من الإصابات والآلام.",
       "id": 6
+    },
+    {
+      "title": "رعاية صحية منزلية",
+      "description": "نقدم خدمات الرعاية الصحية المنزلية لك ولأحبائك",
+      "id": 7
+    },
+    {
+      "title": "تشخيص الامراد",
+      "description": "نساعدك في تشخيص الأمراض من خلال الفحوصات المتقدمة\n",
+      "id": 8
+    },
+    {
+      "title": "اعادة التاهيل",
+      "description": "برامج إعادة التأهيل للمرضى بعد العمليات الجراحية أو الإصابات\n",
+      "id": 9
+    },
+    {
+      "title": "استشارات تغزية",
+      "description": "نقدم استشارات غذائية لمساعدتك في تحسين صحتك العامة",
+      "id": 10
     }
   ]
 }

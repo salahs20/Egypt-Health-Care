@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
-     
-    
 
+    try {
+      const apiUrl = import.meta.env.VITE_Url; // تأكد من تعيين VITE_API_URL في .env
+      const response = await axios.post(`${apiUrl}/login`, { email, password });
 
-
-
+      // التحقق من نوع المستخدم
+      if (response.data.isAdmin === true) {
+        navigate("/admin/");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      setError(
+        "فشل تسجيل الدخول. الرجاء التحقق من البريد الإلكتروني وكلمة المرور."
+      );
+      console.error(err);
+    }
+   
   };
 
   return (
@@ -24,7 +37,7 @@ const Login = () => {
           تسجيل الدخول
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Input */}
+          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           <div>
             <label htmlFor="email" className="block text-sm text-gray-700 mb-1">
               البريد الإلكتروني
@@ -38,8 +51,6 @@ const Login = () => {
               required
             />
           </div>
-
-          {/* Password Input */}
           <div>
             <label
               htmlFor="password"
@@ -56,8 +67,6 @@ const Login = () => {
               required
             />
           </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -1,33 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setphone] = useState("");
+  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-
-
-
-    
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError('');
+    setError("");
 
-    if (!name || !email || !password) {
-      setError('يرجى تعبئة جميع الحقول.');
+    if (!name || !email || !password || !phone) {
+      setError("يرجى تعبئة جميع الحقول.");
       setIsSubmitting(false);
       return;
     }
 
-    // إضافة منطق التسجيل هنا
-    console.log('الاسم:', name);
-    console.log('البريد الإلكتروني:', email);
-    console.log('كلمة المرور:', password);
-    
-    setIsSubmitting(false); // إعادة تعيين حالة الإرسال
+    try {
+      const apiUrl = import.meta.env.VITE_Url; // تأكد من تعريف هذا المتغير في ملف .env
+      const response = await axios.post(`${apiUrl}/signup`,
+      // const response = await axios.post(apiUrl,
+         {
+        name,
+        email,
+        password,
+        phone,
+       
+      });
+
+      if (response.data.error === "User already exists") {
+        setError("المستخدم موجود بالفعل. يرجى تسجيل الدخول.");
+        navigate("/login"); // إعادة توجيه إلى صفحة تسجيل الدخول
+      } else {
+        console.log("تم التسجيل بنجاح:", response.data);
+        navigate("/login"); // توجيه المستخدم إلى صفحة تسجيل الدخول بعد التسجيل الناجح
+      }
+    } catch (err) {
+      console.error("حدث خطأ أثناء التسجيل:", err);
+      setError("فشل في التسجيل. يرجى المحاولة لاحقاً.");
+    } finally {
+      setIsSubmitting(false);
+    }
+
   };
 
   return (
@@ -51,6 +71,19 @@ const SignUp = () => {
               required
             />
           </div>
+          <div>
+            <label htmlFor="phone" className="block text-sm text-gray-700 mb-2">
+              رقم الهاتف{" "}
+            </label>
+            <input
+              type="text"
+              id="phone"
+              value={phone}
+              onChange={(e) => setphone(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
 
           {/* حقل البريد الإلكتروني */}
           <div>
@@ -69,7 +102,10 @@ const SignUp = () => {
 
           {/* حقل كلمة المرور */}
           <div>
-            <label htmlFor="password" className="block text-sm text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm text-gray-700 mb-2"
+            >
               كلمة المرور
             </label>
             <input
@@ -84,9 +120,7 @@ const SignUp = () => {
 
           {/* رسالة الخطأ */}
           {error && (
-            <div className="text-red-500 text-sm mt-2 text-center">
-              {error}
-            </div>
+            <div className="text-red-500 text-sm mt-2 text-center">{error}</div>
           )}
 
           {/* زر الإرسال */}
@@ -94,10 +128,10 @@ const SignUp = () => {
             type="submit"
             disabled={isSubmitting}
             className={`w-full bg-blue-500 text-white py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-              isSubmitting ? 'bg-blue-300 cursor-not-allowed' : ''
+              isSubmitting ? "bg-blue-300 cursor-not-allowed" : ""
             }`}
           >
-            {isSubmitting ? 'جاري التسجيل...' : 'التسجيل'}
+            {isSubmitting ? "جاري التسجيل..." : "التسجيل"}
           </button>
         </form>
       </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -11,16 +12,44 @@ const ContactUs = () => {
   });
 
   const [availableAppointments, setAvailableAppointments] = useState([]);
+  const [services, setServices] = useState([]);
   const [loadingAppointments, setLoadingAppointments] = useState(false);
   const [error, setError] = useState("");
 
-  // دالة لجلب المواعيد المتاحة بناءً على الخدمة المختارة
+  // Fetch services and appointments on load
+  const fetchServices = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_Url}/appointments`);
+      if (response.data) {
+        // Group services by name
+        const servicesData = response.data.reduce((acc, item) => {
+          if (!acc[item.service]) {
+            acc[item.service] = [];
+          }
+          acc[item.service].push(item);
+          return acc;
+        }, {});
+        setServices(Object.keys(servicesData)); // Set service names
+        setAvailableAppointments([]); // Reset available appointments
+      } else {
+        setError("لا توجد خدمات متاحة.");
+      }
+    } catch (error) {
+      setError("حدث خطأ أثناء تحميل الخدمات.");
+    }
+  };
+
+  // Fetch available appointments based on selected service
   const fetchAvailableAppointments = async (service) => {
     try {
-      const response = await fetch(`http://localhost:3000/appointments?service=${service}`);
-      const data = await response.json();
-      if (data && data.appointments) {
-        setAvailableAppointments(data.appointments);
+      const response = await axios.get(`${import.meta.env.VITE_Url}/appointments`, {
+        params: { service },
+      });
+      if (response.data) {
+        const serviceAppointments = response.data.filter(
+          (appointment) => appointment.service === service
+        );
+        setAvailableAppointments(serviceAppointments);
       } else {
         setError("لا توجد مواعيد متاحة لهذا التخصص.");
       }
@@ -31,33 +60,30 @@ const ContactUs = () => {
     }
   };
 
-  // دالة للتعامل مع التغييرات في المدخلات
+  // Handle form data changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
     if (name === "service" && value) {
       setLoadingAppointments(true);
-      setError(""); // إعادة تعيين الخطأ
+      setError(""); // Reset error
       fetchAvailableAppointments(value);
     }
   };
 
-  // دالة لمعالجة إرسال النموذج
+  // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("تم إرسال الطلب بنجاح");
   };
 
-  // استخدام useEffect لتحميل المواعيد عند تغيير الخدمة
+  // Fetch services when component mounts
   useEffect(() => {
-    if (formData.service) {
-      setLoadingAppointments(true);
-      fetchAvailableAppointments(formData.service);
-    }
-  }, [formData.service]);
+    fetchServices();
+  }, []);
 
-  // التعديل هنا لإعادة تحميل المواعيد عند إضافة موعد جديد
+  // Fetch available appointments when the service is selected or changed
   useEffect(() => {
     if (formData.service) {
       setLoadingAppointments(true);
@@ -73,7 +99,7 @@ const ContactUs = () => {
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* حقل الاسم */}
+            {/* Full Name */}
             <div>
               <label className="block text-gray-700 mb-2">الاسم الكامل</label>
               <input
@@ -86,7 +112,7 @@ const ContactUs = () => {
               />
             </div>
 
-            {/* حقل البريد الإلكتروني */}
+            {/* Email */}
             <div>
               <label className="block text-gray-700 mb-2">البريد الإلكتروني</label>
               <input
@@ -99,7 +125,7 @@ const ContactUs = () => {
               />
             </div>
 
-            {/* حقل رقم الهاتف */}
+            {/* Phone */}
             <div>
               <label className="block text-gray-700 mb-2">رقم الهاتف</label>
               <input
@@ -112,7 +138,7 @@ const ContactUs = () => {
               />
             </div>
 
-            {/* حقل الخدمة */}
+            {/* Service */}
             <div>
               <label className="block text-gray-700 mb-2">الخدمة المطلوبة</label>
               <select
@@ -123,13 +149,15 @@ const ContactUs = () => {
                 required
               >
                 <option value="">اختر الخدمة</option>
-                <option value="استشارة طبية">استشارة طبية</option>
-                <option value="رعاية أسنان">رعاية أسنان</option>
-                <option value="جراحة">جراحة</option>
+                {services.map((service, index) => (
+                  <option key={index} value={service}>
+                    {service}
+                  </option>
+                ))}
               </select>
             </div>
 
-            {/* حقل الموعد */}
+            {/* Appointment */}
             {formData.service && (
               <div>
                 <label className="block text-gray-700 mb-2">اختيار الموعد</label>
@@ -147,8 +175,8 @@ const ContactUs = () => {
                     <option disabled>{error}</option>
                   ) : (
                     availableAppointments.map((appointment, index) => (
-                      <option key={index} value={appointment}>
-                        {new Date(appointment).toLocaleString()}
+                      <option key={index} value={appointment.date}>
+                        {new Date(appointment.date).toLocaleString()}
                       </option>
                     ))
                   )}
@@ -156,7 +184,7 @@ const ContactUs = () => {
               </div>
             )}
 
-            {/* حقل الرسالة */}
+            {/* Message */}
             <div className="col-span-1 md:col-span-2">
               <label className="block text-gray-700 mb-2">ملاحظات أو تفاصيل إضافية</label>
               <textarea

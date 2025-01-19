@@ -1,42 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const ServiceTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [editService, setEditService] = useState(null);
+  const [services, setServices] = useState([]);
 
-  // Static services data
-  const [services, setServices] = useState([
-    { id: 1, name: "خدمة 1" },
-    { id: 2, name: "خدمة 2" },
-    { id: 3, name: "خدمة 3" },
-  ]);
+  const apiUrl = import.meta.env.VITE_Url; // استبدل هذا بعنوان API الخاص بك
+
+  useEffect(() => {
+    // جلب الخدمات من API عند تحميل المكون
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/services`);
+        setServices(response.data);
+      } catch (err) {
+        console.error("خطأ في جلب البيانات:", err);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(searchTerm.toLowerCase())
+    service.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDeleteService = (serviceId) => {
+  const handleDeleteService = async (serviceId) => {
     if (window.confirm("هل أنت متأكد من أنك تريد حذف هذه الخدمة؟")) {
-      setServices(services.filter((service) => service.id !== serviceId));
+      try {
+        await axios.delete(`${apiUrl}/services/${serviceId}`);
+        setServices(services.filter((service) => service.id !== serviceId));
+      } catch (err) {
+        console.error("خطأ في حذف الخدمة:", err);
+      }
     }
   };
 
-  const handleAddService = () => {
-    const newService = { id: services.length + 1, name: "خدمة جديدة" };
-    setServices([...services, newService]);
+  const handleAddService = async () => {
+    const newService = { title: "", description: "" };
+
+    try {
+      const response = await axios.post(`${apiUrl}/services`, newService);
+      setServices([...services, response.data]);
+    } catch (err) {
+      console.error("خطأ في إضافة الخدمة:", err);
+    }
   };
 
   const handleEditService = (service) => {
     setEditService(service);
   };
 
-  const handleSaveEdit = () => {
-    setServices(
-      services.map((service) =>
-        service.id === editService.id ? editService : service
-      )
-    );
-    setEditService(null);
+  const handleSaveEdit = async () => {
+    try {
+      const response = await axios.put(
+        `${apiUrl}/services/${editService.id}`,
+        editService
+      );
+      setServices(
+        services.map((service) =>
+          service.id === editService.id ? response.data : service
+        )
+      );
+      setEditService(null);
+    } catch (err) {
+      console.error("خطأ في تعديل الخدمة:", err);
+    }
   };
 
   return (
@@ -73,13 +103,15 @@ const ServiceTable = () => {
             <thead className="bg-gray-200 text-gray-700">
               <tr>
                 <th className="py-3 px-4">اسم الخدمة</th>
+                <th className="py-3 px-4">الوصف</th>
                 <th className="py-3 px-4">الإجراءات</th>
               </tr>
             </thead>
             <tbody>
               {filteredServices.map((service) => (
                 <tr key={service.id} className="border-b hover:bg-gray-100">
-                  <td className="py-3 px-4">{service.name}</td>
+                  <td className="py-3 px-4">{service.title}</td>
+                  <td className="py-3 px-4">{service.description}</td>
                   <td className="py-3 px-4">
                     <button
                       onClick={() => handleEditService(service)}
@@ -106,13 +138,26 @@ const ServiceTable = () => {
             <div className="bg-white p-6 rounded-lg shadow-lg w-96">
               <h2 className="text-xl font-semibold mb-4">تعديل الخدمة</h2>
               <div className="mb-4">
-                <label className="block text-sm font-medium">اسم الخدمة</label>
+                <label className="block text-sm font-medium" >اسم الخدمة</label>
                 <input
                   type="text"
                   className="border border-gray-300 py-2 px-4 w-full rounded"
-                  value={editService.name}
+                  value={editService.title}
                   onChange={(e) =>
-                    setEditService({ ...editService, name: e.target.value })
+                    setEditService({ ...editService, title: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium">الوصف</label>
+                <textarea
+                  className="border border-gray-300 py-2 px-4 w-full rounded"
+                  value={editService.description}
+                  onChange={(e) =>
+                    setEditService({
+                      ...editService,
+                      description: e.target.value,
+                    })
                   }
                 />
               </div>

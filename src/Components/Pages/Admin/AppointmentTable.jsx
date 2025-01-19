@@ -1,37 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const AppointmentTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [newAppointment, setNewAppointment] = useState({ service: "", date: "" });
   const [editAppointmentId, setEditAppointmentId] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [appointments, setAppointments] = useState([]);
 
-  // Static appointments data
-  const [appointments, setAppointments] = useState([
-    { id: 1, service: "خدمة 1", date: "2024-12-25T10:00" },
-    { id: 2, service: "خدمة 2", date: "2024-12-26T14:00" },
-    { id: 3, service: "خدمة 3", date: "2024-12-27T09:30" },
-  ]);
+  const apiUrl = import.meta.env.VITE_Url; // Replace with your API URL
+
+  // Fetch appointments from API
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/appointments`);
+        setAppointments(response.data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
 
   const filteredAppointments = appointments.filter((appointment) =>
     appointment.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
     new Date(appointment.date).toLocaleString().includes(searchTerm)
   );
 
-  const handleAddAppointment = () => {
+  const handleAddAppointment = async () => {
     if (!newAppointment.service || !newAppointment.date) {
       setErrorMessage("يرجى إدخال الخدمة والتاريخ.");
       return;
     }
 
-    const newAppointmentData = { id: appointments.length + 1, service: newAppointment.service, date: newAppointment.date };
-    setAppointments([...appointments, newAppointmentData]);
-    setNewAppointment({ service: "", date: "" });
-    setErrorMessage("");
+    try {
+      const response = await axios.post(`${apiUrl}/appointments`, newAppointment);
+      setAppointments([...appointments, response.data]);
+      setNewAppointment({ service: "", date: "" });
+      setErrorMessage("");
+    } catch (error) {
+      console.error("Error adding appointment:", error);
+      setErrorMessage("حدث خطأ أثناء إضافة الموعد.");
+    }
   };
 
-  const handleDeleteAppointment = (id) => {
-    setAppointments(appointments.filter((appointment) => appointment.id !== id));
+  const handleDeleteAppointment = async (id) => {
+    try {
+      await axios.delete(`${apiUrl}/appointments/${id}`);
+      setAppointments(appointments.filter((appointment) => appointment.id !== id));
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+      setErrorMessage("حدث خطأ أثناء حذف الموعد.");
+    }
   };
 
   const handleEditClick = (appointment) => {
@@ -39,21 +61,27 @@ const AppointmentTable = () => {
     setNewAppointment({ service: appointment.service, date: appointment.date });
   };
 
-  const handleUpdateAppointment = () => {
+  const handleUpdateAppointment = async () => {
     if (!newAppointment.service || !newAppointment.date) {
       setErrorMessage("يرجى إدخال الخدمة والتاريخ.");
       return;
     }
 
-    const updatedAppointment = { id: editAppointmentId, service: newAppointment.service, date: newAppointment.date };
-    setAppointments(
-      appointments.map((appointment) =>
-        appointment.id === editAppointmentId ? updatedAppointment : appointment
-      )
-    );
-    setEditAppointmentId(null);
-    setNewAppointment({ service: "", date: "" });
-    setErrorMessage("");
+    try {
+      const updatedAppointment = { ...newAppointment, id: editAppointmentId };
+      const response = await axios.put(`${apiUrl}/appointments/${editAppointmentId}`, updatedAppointment);
+      setAppointments(
+        appointments.map((appointment) =>
+          appointment.id === editAppointmentId ? response.data : appointment
+        )
+      );
+      setEditAppointmentId(null);
+      setNewAppointment({ service: "", date: "" });
+      setErrorMessage("");
+    } catch (error) {
+      console.error("Error updating appointment:", error);
+      setErrorMessage("حدث خطأ أثناء تحديث الموعد.");
+    }
   };
 
   return (
