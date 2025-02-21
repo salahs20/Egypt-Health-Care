@@ -43,6 +43,11 @@
       "email": "salahelzeini@gmail.com",
       "password": "123456",
       "id": 5
+    },
+    {
+      "email": "sm8@gmail.com",
+      "password": "cscscs",
+      "id": 6
     }
   ],
   "signup": [
@@ -56,12 +61,12 @@
       "isAdmin": true
     },
     {
-      "name": "Salah",
-      "email": "sm8353705@gmail.com",
-      "password": "123456789",
-      "phone": "01126250856",
-      "isAdmin": false,
-      "id": 4
+      "name": "nour sameh",
+      "email": "sm8@gmail.com",
+      "password": "2222222",
+      "phone": "123456984511",
+      "id": 4,
+      "isAdmin": false
     }
   ],
   "appointments": [
@@ -94,19 +99,19 @@
       "service": "علاج طبيعي",
       "date": "2024-12-29T18:53",
       "id": 6
+    },
+    {
+      "service": "جراحة",
+      "date": "2025-02-26T13:28",
+      "id": 7
+    },
+    {
+      "service": "رعاية اسنان",
+      "date": "2025-02-25T13:28",
+      "id": 8
     }
   ],
   "services": [
-    {
-      "id": 3,
-      "title": "استشارة طبية ",
-      "description": "نقدم استشارات طبية مع مجموعة من الأطباء المتخصصين\n"
-    },
-    {
-      "title": "رعاية اسنان ",
-      "id": 4,
-      "description": "خدمات رعاية أسنان تشمل الفحوصات والعلاجات المختلفة\n"
-    },
     {
       "title": "جراحة",
       "description": "نحن نقدم خدمات جراحية مع أفضل الأطباء والجراحين",

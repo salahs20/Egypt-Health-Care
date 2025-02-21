@@ -19,7 +19,7 @@ const Home = () => {
             والمعلومات الصحية. مهمتنا هي تزويدك بخدمات رعاية صحية عالية الجودة
             ومشورة الخبراء بشأن الوقاية من الأمراض والنصائح الصحية وإدارة
             الأدوية. نحن هنا لإرشادك في كل خطوة على الطريق في رحلتك الصحية.
-          </p>
+         </p>
           {/* Call-to-Action Buttons */}
           <div className="flex justify-center gap-4 mt-6 md:justify-end">
             <Link to="/services">
@@ -37,11 +37,16 @@ const Home = () => {
 
         {/* Image Section */}
         <div className="flex justify-center w-full h-full md:w-1/2 animate-scale-in">
-          <img src={ph} alt="Healthcare" className="w-2/5 md:w-3/7 " />
+          <img src={ph} alt="Healthcare" className="w-2/5 " />
         </div>
       </div>
       <Scrollbar />
-      
+
+
+
+
+
+    
     </>
   );
 };
