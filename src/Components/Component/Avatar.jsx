@@ -40,7 +40,7 @@ const Avatar = ({handleMobileItemClick}) => {
         onClick={toggleDropdown}
       >
         {/* Display the first letter of the name or any initials */}
-        {0}
+        {"S"}
       </div>
 
       {/* Dropdown Menu */}
