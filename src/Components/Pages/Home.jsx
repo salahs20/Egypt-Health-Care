@@ -4,8 +4,6 @@ import ph from "../../Imag/WhatsApp Image 2024-11-10 at 20.54.05_95d6df99.png";
 import Scrollbar from "../Component/Scrolbar";
 
 const Home = () => {
- 
-
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center md:flex md:flex-row-reverse md:justify-between pt-16 px-4">
@@ -19,7 +17,7 @@ const Home = () => {
             والمعلومات الصحية. مهمتنا هي تزويدك بخدمات رعاية صحية عالية الجودة
             ومشورة الخبراء بشأن الوقاية من الأمراض والنصائح الصحية وإدارة
             الأدوية. نحن هنا لإرشادك في كل خطوة على الطريق في رحلتك الصحية.
-         </p>
+          </p>
           {/* Call-to-Action Buttons */}
           <div className="flex justify-center gap-4 mt-6 md:justify-end">
             <Link to="/services">
@@ -41,12 +39,6 @@ const Home = () => {
         </div>
       </div>
       <Scrollbar />
-
-
-
-
-
-    
     </>
   );
 };
