@@ -1,93 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { MdOutlineClose } from "react-icons/md";
 
-// Data for hospitals, clinics, and pharmacies
 const hospitals = [
-  {
-    name: "مستشفى القاهرة الدولي",
-    img: "https://via.placeholder.com/200x150?text=مستشفى+القاهرة",
-  },
-  {
-    name: "مستشفى النيل",
-    img: "https://via.placeholder.com/200x150?text=مستشفى+النيل",
-  },
-  {
-    name: "عيادة الفراعنة",
-    img: "https://via.placeholder.com/200x150?text=عيادة+الفراعنة",
-  },
-  {
-    name: "عيادة النخبة",
-    img: "https://via.placeholder.com/200x150?text=عيادة+النخبة",
-  },
-  {
-    name: "صيدلية التوحيد",
-    img: "https://via.placeholder.com/200x150?text=صيدلية+التوحيد",
-  },
-  {
-    name: "صيدلية المدينة",
-    img: "https://via.placeholder.com/200x150?text=صيدلية+المدينة",
-  },
-  {
-    name: "مستشفى الحرمين",
-    img: "https://via.placeholder.com/200x150?text=مستشفى+الحرمين",
-  },
-  {
-    name: "مستشفى الأزهر",
-    img: "https://via.placeholder.com/200x150?text=مستشفى+الأزهر",
-  },
-  {
-    name: "عيادة الطب الحديث",
-    img: "https://via.placeholder.com/200x150?text=عيادة+الطب+الحديث",
-  },
-  {
-    name: "صيدلية الشفاء",
-    img: "https://via.placeholder.com/200x150?text=صيدلية+الشفاء",
-  },
+  { name: "مستشفى القاهرة الدولي", img: "/images/cairo-hospital.jpg" },
+  { name: "مستشفى النيل", img: "/images/nile-hospital.jpg" },
+  { name: "مستشفى الحرمين", img: "/images/haramain-hospital.jpg" },
+  { name: "مستشفى الأزهر", img: "/images/azhar-hospital.jpg" },
+  { name: "مستشفى الرحمة", img: "/images/rahma-hospital.jpg" },
+  { name: "مستشفى الشفاء", img: "/images/shifa-hospital.jpg" },
+  { name: "مستشفى الفاروق", img: "/images/farouk-hospital.jpg" },
+  { name: "مستشفى العافية", img: "/images/afiya-hospital.jpg" },
+  { name: "مستشفى النخبة", img: "/images/nokhba-hospital.jpg" },
+  { name: "مستشفى المستقبل", img: "/images/mustaqbal-hospital.jpg" },
 ];
 
-const Scrollbar = () => {
+const HospitalList = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const openImage = (img) => setSelectedImage(img);
+  const closeImage = () => setSelectedImage(null);
+
   const settings = {
-    infinite: true, // Infinite scrolling
-    speed: 1500, // Scroll speed
-    slidesToShow: 3, // Number of slides visible at once
-    slidesToScroll: 1, // Number of slides to scroll per action
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 2000, // Autoplay speed (2000ms)
-    arrows: false, // Hide arrows
+    dots: false,
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 0.5,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 400,
+    arrows: false,
     responsive: [
-      {
-        breakpoint: 1024, // For screens smaller than 1024px
-        settings: {
-          slidesToShow: 2, // Show 2 slides on medium screens
-        },
-      },
-      {
-        breakpoint: 768, // For screens smaller than 768px
-        settings: {
-          slidesToShow: 1, // Show 1 slide on mobile screens
-        },
-      },
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 768, settings: { slidesToShow: 1 } },
     ],
   };
 
   return (
-    <div className="pb-10 ">
-   
-        <Slider {...settings}>
-          {hospitals.map((hospital, index) => (
-            <div key={index} className="text-center ">
-              <img
-                src={hospital.img}
-                alt={hospital.name}
-                className="w-screen h-40 object-cover rounded-lg shadow-md ps-1 pe-1 md:pe-0"
-              />
-              <h3 className="mt-2 text-lg font-medium">{hospital.name}</h3>
-            </div>
-          ))}
-        </Slider>
-      </div>
-   
+    <div className="pb-10 text-center">
+      
+      <Slider {...settings}>
+        {hospitals.map((hospital, index) => (
+          <div key={index} className="text-center cursor-pointer" onClick={() => openImage(hospital.img)}>
+            <img src={hospital.img} alt={hospital.name} className="w-screen h-40 object-cover rounded-lg shadow-md" />
+            <h3 className="mt-2 text-lg font-medium">{hospital.name}</h3>
+          </div>
+        ))}
+      </Slider>
+      {selectedImage && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50" onClick={closeImage}>
+          <div className="relative">
+            <img src={selectedImage} alt="Selected" className="max-w-full max-h-screen rounded-lg" />
+            <button className="absolute top-2 right-2 text-white bg-red-600 px-4 py-2 rounded" onClick={closeImage}>
+              <MdOutlineClose />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default Scrollbar;
+export default HospitalList;

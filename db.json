@@ -59,14 +59,6 @@
       "token": "abcdef123456",
       "id": 3,
       "isAdmin": true
-    },
-    {
-      "name": "nour sameh",
-      "email": "sm8@gmail.com",
-      "password": "2222222",
-      "phone": "123456984511",
-      "id": 4,
-      "isAdmin": false
     }
   ],
   "appointments": [
@@ -118,7 +110,7 @@
       "id": 5
     },
     {
-      "title": "علاج طبيعي",
+      "title": "علاج طب",
       "description": "خدمات العلاج الطبيعي لمساعدتك في التعافي من الإصابات والآلام.",
       "id": 6
     },

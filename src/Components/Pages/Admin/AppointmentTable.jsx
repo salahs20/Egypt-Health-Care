@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { db } from "../../../../firebase/firebase"; // تأكد من استيراد إعدادات Firebase
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 
 const AppointmentTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -8,51 +16,42 @@ const AppointmentTable = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [appointments, setAppointments] = useState([]);
 
-  const apiUrl = import.meta.env.VITE_Url; // Replace with your API URL
+  const fetchAppointments = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "Date"));
+      setAppointments(
+        querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      );
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
+  };
 
-  // Fetch appointments from API
   useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/appointments`);
-        setAppointments(response.data);
-      } catch (error) {
-        console.error("Error fetching appointments:", error);
-      }
-    };
-
     fetchAppointments();
   }, []);
-
-  const filteredAppointments = appointments.filter((appointment) =>
-    appointment.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    new Date(appointment.date).toLocaleString().includes(searchTerm)
-  );
 
   const handleAddAppointment = async () => {
     if (!newAppointment.service || !newAppointment.date) {
       setErrorMessage("يرجى إدخال الخدمة والتاريخ.");
       return;
     }
-
     try {
-      const response = await axios.post(`${apiUrl}/appointments`, newAppointment);
-      setAppointments([...appointments, response.data]);
+      const docRef = await addDoc(collection(db, "Date"), newAppointment);
+      setAppointments([...appointments, { id: docRef.id, ...newAppointment }]);
       setNewAppointment({ service: "", date: "" });
       setErrorMessage("");
     } catch (error) {
       console.error("Error adding appointment:", error);
-      setErrorMessage("حدث خطأ أثناء إضافة الموعد.");
     }
   };
 
   const handleDeleteAppointment = async (id) => {
     try {
-      await axios.delete(`${apiUrl}/appointments/${id}`);
+      await deleteDoc(doc(db, "Date", id));
       setAppointments(appointments.filter((appointment) => appointment.id !== id));
     } catch (error) {
       console.error("Error deleting appointment:", error);
-      setErrorMessage("حدث خطأ أثناء حذف الموعد.");
     }
   };
 
@@ -66,35 +65,33 @@ const AppointmentTable = () => {
       setErrorMessage("يرجى إدخال الخدمة والتاريخ.");
       return;
     }
-
     try {
-      const updatedAppointment = { ...newAppointment, id: editAppointmentId };
-      const response = await axios.put(`${apiUrl}/appointments/${editAppointmentId}`, updatedAppointment);
+      const appointmentRef = doc(db, "Date", editAppointmentId);
+      await updateDoc(appointmentRef, newAppointment);
       setAppointments(
         appointments.map((appointment) =>
-          appointment.id === editAppointmentId ? response.data : appointment
+          appointment.id === editAppointmentId ? { id: editAppointmentId, ...newAppointment } : appointment
         )
       );
       setEditAppointmentId(null);
       setNewAppointment({ service: "", date: "" });
-      setErrorMessage("");
     } catch (error) {
       console.error("Error updating appointment:", error);
-      setErrorMessage("حدث خطأ أثناء تحديث الموعد.");
     }
   };
 
+  const filteredAppointments = appointments.filter((appointment) =>
+    appointment.service.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="pt-16 pb-8 px-4 md:ps-[16rem]">
-      <div className=" mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <div className="mx-auto bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">
           {editAppointmentId ? "تعديل الموعد" : "إضافة موعد جديد"}
         </h2>
-
-        {/* Error Message */}
         {errorMessage && <p className="text-red-500 mb-4 text-center">{errorMessage}</p>}
 
-        {/* Form */}
         <div className="mb-6">
           <div className="mb-4 flex flex-col sm:flex-row sm:gap-4">
             <input
@@ -113,15 +110,12 @@ const AppointmentTable = () => {
           </div>
           <button
             onClick={editAppointmentId ? handleUpdateAppointment : handleAddAppointment}
-            className={`${
-              editAppointmentId ? "bg-blue-500" : "bg-green-500"
-            } text-white py-2 px-4 rounded hover:opacity-90 w-full sm:w-auto`}
+            className={`${editAppointmentId ? "bg-blue-500" : "bg-green-500"} text-white py-2 px-4 rounded hover:opacity-90 w-full sm:w-auto`}
           >
             {editAppointmentId ? "تحديث الموعد" : "إضافة موعد"}
           </button>
         </div>
 
-        {/* Search */}
         <div className="mb-4 flex items-center">
           <input
             type="text"
@@ -132,7 +126,6 @@ const AppointmentTable = () => {
           />
         </div>
 
-        {/* Appointments Table */}
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
             <thead className="bg-blue-100 text-blue-700">

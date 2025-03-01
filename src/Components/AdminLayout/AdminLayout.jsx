@@ -10,8 +10,11 @@ import SideBar from "../Pages/Admin/SideBar";
 const AdminLayout = () => {
   return (
     <>
+    
       <HeaderAdmin />
+      
       <SideBar />
+      <div className="pt-[5rem] ps-[6rem]">fccbh</div>
       <Routes future={{ v7_startTransition: true }}>
         <Route path="*/" element={<ServiceTable />} />
         <Route path="/appointment" element={<AppointmentTable />} />
