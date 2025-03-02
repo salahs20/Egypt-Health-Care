@@ -56,7 +56,7 @@ const AdminServices = () => {
   };
 
   return (
-    <div className="pt-16 pb-8 px-4 md:ps-[16rem]">
+    <div className=" pb-8 px-4 md:ps-[16rem]">
       {[
         {
           title: "الخدمات الطبية",
