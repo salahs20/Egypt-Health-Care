@@ -8,11 +8,18 @@ const ContactUs = () => {
     email: "",
     phone: "",
     service: "",
+    province: "",
     message: "",
     appointment: "",
+    type: "clinic",
+    clinicOrCenter: "",
   });
+
   const [services, setServices] = useState([]);
+  const [provinces, setProvinces] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [clinics, setClinics] = useState([]);
+  const [centers, setCenters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -27,7 +34,19 @@ const ContactUs = () => {
         setError("خطأ في تحميل الخدمات");
       }
     };
+
+    const fetchProvinces = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "Provinces"));
+        const provinceList = querySnapshot.docs.map((doc) => doc.data().name);
+        setProvinces(provinceList);
+      } catch {
+        setError("خطأ في تحميل المحافظات");
+      }
+    };
+
     fetchServices();
+    fetchProvinces();
   }, []);
 
   useEffect(() => {
@@ -48,6 +67,29 @@ const ContactUs = () => {
     fetchAppointments();
   }, [formData.service]);
 
+  useEffect(() => {
+    if (!formData.province) return;
+    const fetchClinicsAndCenters = async () => {
+      try {
+        const clinicsSnapshot = await getDocs(collection(db, "Clinics"));
+        const filteredClinics = clinicsSnapshot.docs
+          .map((doc) => doc.data())
+          .filter((clinic) => clinic.province === formData.province);
+
+        const centersSnapshot = await getDocs(collection(db, "Centers"));
+        const filteredCenters = centersSnapshot.docs
+          .map((doc) => doc.data())
+          .filter((center) => center.province === formData.province);
+
+        setClinics(filteredClinics);
+        setCenters(filteredCenters);
+      } catch {
+        setError("خطأ في تحميل العيادات والمراكز");
+      }
+    };
+    fetchClinicsAndCenters();
+  }, [formData.province]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -62,8 +104,11 @@ const ContactUs = () => {
         email: "",
         phone: "",
         service: "",
+        province: "",
         message: "",
         appointment: "",
+        type: "clinic",
+        clinicOrCenter: "",
       });
     } catch {
       setError("فشل في إرسال الطلب، حاول مرة أخرى");
@@ -104,6 +149,62 @@ const ContactUs = () => {
           className="border p-2 rounded"
         />
         <select
+          name="province"
+          value={formData.province}
+          onChange={handleChange}
+          required
+          className="border p-2 rounded"
+        >
+          <option value="">اختر المحافظة</option>
+          {provinces.map((province, index) => (
+            <option key={index} value={province}>
+              {province}
+            </option>
+          ))}
+        </select>
+        <div className="flex gap-4">
+          <label>
+            <input
+              type="radio"
+              name="type"
+              value="clinic"
+              checked={formData.type === "clinic"}
+              onChange={handleChange}
+            />
+            عيادة
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="type"
+              value="center"
+              checked={formData.type === "center"}
+              onChange={handleChange}
+            />
+            مركز
+          </label>
+        </div>
+        {formData.type && (
+          <select
+            name="clinicOrCenter"
+            value={formData.clinicOrCenter}
+            onChange={handleChange}
+            required
+            className="border p-2 rounded"
+          >
+            <option value="">
+              اختر {formData.type === "clinic" ? "العيادة" : "المركز"}
+            </option>
+            {(formData.type === "clinic" ? clinics : centers).map(
+              (item, index) => (
+                <option key={index} value={item.name}>
+                  {item.name}
+                </option>
+              )
+            )}
+          </select>
+        )}
+        <select
           name="service"
           value={formData.service}
           onChange={handleChange}
@@ -117,26 +218,12 @@ const ContactUs = () => {
             </option>
           ))}
         </select>
-        {formData.service && (
-          <select
-            name="appointment"
-            value={formData.appointment}
-            onChange={handleChange}
-            required
-            className="border p-2 rounded"
-          >
-            <option value="">اختر موعد</option>
-            {loading ? (
-              <option>تحميل...</option>
-            ) : (
-              appointments.map((app, index) => (
-                <option key={index} value={app.date}>
-                  {new Date(app.date).toLocaleString()}
-                </option>
-              ))
-            )}
-          </select>
-        )}
+        <select name="appointment" value={formData.appointment} onChange={handleChange} required className="border p-2 rounded">
+          <option value="">اختر الموعد</option>
+          {appointments.map((appointment, index) => (
+            <option key={index} value={appointment.date}>{appointment.date}</option>
+          ))}
+        </select>
         <textarea
           name="message"
           placeholder="ملاحظات"

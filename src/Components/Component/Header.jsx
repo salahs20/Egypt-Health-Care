@@ -52,7 +52,7 @@ const Header = () => {
           </Link>
           {/* Services Dropdown */}
           <div className="relative " onClick={(e) => e.stopPropagation()}>
-            <button
+            {/* <button
               onClick={() => {
                 closeDropdowns();
                 setIsServicesOpen(!isServicesOpen);
@@ -61,30 +61,30 @@ const Header = () => {
             >
               <span>خدمات طبية</span>
               <MdArrowDropDown />
-            </button>
+            </button> */}
             {isServicesOpen && (
               <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                <Link
+                {/* <Link
                   to="/services/consultations"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Consultations
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   to="/services/dental-care"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Dental Care
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   to="/services/surgery"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Surgery
-                </Link>
+                </Link> */}
               </div>
             )}
           </div>
@@ -103,26 +103,26 @@ const Header = () => {
             {isMedicalInfoOpen && (
               <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                 <Link
-                  to="/info/health-tips"
+                  to="/healthTips"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Health Tips
                 </Link>
-                <Link
+                {/* <Link
                   to="/info/disease-prevention"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Disease Prevention
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   to="/info/medications"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Medications
-                </Link>
+                </Link> */}
               </div>
             )}
           </div>
@@ -139,9 +139,9 @@ const Header = () => {
           </div>
           </Link>
           
-          <Link to="/signup" className="text-white hover:text-gray-200">
+          {/* <Link to="/signup" className="text-white hover:text-gray-200">
             انشاء حساب
-          </Link>
+          </Link> */}
          
         </div>
 
@@ -182,10 +182,11 @@ const Header = () => {
           >
             <IoHomeOutline className="text-xl text-" />
           </Link>
+          
 
           {/* Mobile Services Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
-            <button
+            {/* <button
               onClick={() => {
                 setIsServicesOpen(!isServicesOpen);
               }}
@@ -193,30 +194,30 @@ const Header = () => {
             >
               <span>خدمات طبية</span>
               <MdArrowDropDown />
-            </button>
+            </button> */}
             {isServicesOpen && (
               <div className="mt-2 space-y-2 bg-blue-gray-500 rounded-md">
-                <Link
+                {/* <Link
                   to="/services/consultations"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Consultations
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   to="/services/dental-care"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Dental Care
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   to="/services/surgery"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Surgery
-                </Link>
+                </Link> */}
               </div>
             )}
           </div>
@@ -235,26 +236,26 @@ const Header = () => {
             {isMedicalInfoOpen && (
               <div className="mt-2 space-y-2 bg-blue-gray-500 rounded-md">
                 <Link
-                  to="/info/health-tips"
+                  to="/healthTips"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Health Tips
                 </Link>
-                <Link
-                  to="/info/disease-prevention"
+                {/* <Link
+                  to="/healthTips"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Disease Prevention
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   to="/info/medications"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Medications
-                </Link>
+                </Link> */}
               </div>
             )}
           </div>
@@ -283,13 +284,14 @@ const Header = () => {
               <span>تسجيل الدخول</span>
             </div>
           </Link>
-          <Link
+          
+          {/* <Link
             to="/signup"
             className="block text-white py-2 px-4 hover:bg-blue-600"
             onClick={handleMobileItemClick}
           >
             انشاء حساب
-          </Link>
+          </Link> */}
          
         </div>
       </div>
