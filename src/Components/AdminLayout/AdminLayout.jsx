@@ -10,11 +10,12 @@ import SideBar from "../Pages/Admin/SideBar";
 const AdminLayout = () => {
   return (
     <>
-    
-
       <HeaderAdmin />
       <SideBar />
-      <div className="pt-16 pb-8 md:ps-[16rem] text-center text-blue-700 text-5xl font-mono font-bold"> Hello Ya Admin</div>
+      <div className="pt-16  md:ps-[16rem] text-center text-blue-700 text-5xl font-mono font-bold">
+        {" "}
+        Hello Ya Admin
+      </div>
       <Routes future={{ v7_startTransition: true }}>
         <Route path="*/" element={<ServiceTable />} />
         <Route path="/appointment" element={<AppointmentTable />} />

@@ -106,7 +106,7 @@ const UserTable = () => {
   );
 
   return (
-    <div className="pt-16 pb-8 px-4 sm:px-6 lg:px-8">
+    <div className=" pb-8  sm:px-6 lg:px-8">
       <div className="md:ps-[16rem] mx-auto bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">
           إدارة المستخدمين
