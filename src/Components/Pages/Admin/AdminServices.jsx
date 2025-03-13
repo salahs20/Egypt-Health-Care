@@ -4,16 +4,19 @@ import {
   collection,
   getDocs,
   addDoc,
+  updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { th } from "framer-motion/client";
 
 const AdminServices = () => {
   const [services, setServices] = useState([]);
   const [advice, setAdvice] = useState([]);
   const [serviceData, setServiceData] = useState({ name: "", description: "" });
   const [adviceData, setAdviceData] = useState({ title: "", content: "" });
+  const [error, setError] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +31,7 @@ const AdminServices = () => {
           adviceSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
         );
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setError("Error fetching data: " + error.message);
       }
     };
     fetchData();
@@ -37,27 +40,49 @@ const AdminServices = () => {
   const handleDelete = async (id, type) => {
     try {
       await deleteDoc(doc(db, type, id));
-      if (type === "services")
+      if (type === "services") {
         setServices(services.filter((service) => service.id !== id));
-      else setAdvice(advice.filter((item) => item.id !== id));
+      } else {
+        setAdvice(advice.filter((item) => item.id !== id));
+      }
     } catch (err) {
-      console.error("Error deleting:", err);
+      setError("Error deleting: " + err.message);
     }
   };
 
-  const handleAdd = async (type, data, setData, setList) => {
+  const handleAddOrUpdate = async (type, data, setData, setList) => {
     if (!Object.values(data).every(Boolean)) return;
     try {
-      const ref = await addDoc(collection(db, type), data);
-      setList((prev) => [...prev, { id: ref.id, ...data }]);
-      setData(Object.fromEntries(Object.keys(data).map((key) => [key, ""])));
+      if (isEditing) {
+        await updateDoc(doc(db, type, currentId), data);
+        setList((prev) =>
+          prev.map((item) => (item.id === currentId ? { id: currentId, ...data } : item))
+        );
+        setIsEditing(false);
+        setCurrentId(null);
+      } else {
+        const ref = await addDoc(collection(db, type), data);
+        setList((prev) => [...prev, { id: ref.id, ...data }]);
+      }
+      setData({ name: "", description: "" });
     } catch (error) {
-      console.error("Error adding:", error);
+      setError("Error adding/updating: " + error.message);
     }
+  };
+
+  const editItem = (item, type) => {
+    if (type === "services") {
+      setServiceData({ name: item.name, description: item.description });
+    } else {
+      setAdviceData({ title: item.title, content: item.content });
+    }
+    setIsEditing(true);
+    setCurrentId(item.id);
   };
 
   return (
-    <div className=" pb-8 px-4 md:ps-[16rem]">
+    <div className="pb-8 px-4 md:ps-[16rem]">
+      {error && <p className="text-red-500">{error}</p>}
       {[
         {
           title: "الخدمات الطبية",
@@ -84,47 +109,47 @@ const AdminServices = () => {
             type="text"
             className="border border-gray-300 py-2 px-4 rounded w-full mb-4"
             placeholder={`عنوان ${title}`}
-            value={data[Object.keys(data)[0]]}
+            value={data.name || data.title || ""}
             onChange={(e) =>
-              setData({ ...data, [Object.keys(data)[0]]: e.target.value })
+              setData({ ...data, name: e.target.value, title: e.target.value })
             }
           />
           <textarea
             className="border border-gray-300 py-2 px-4 rounded w-full mb-4"
             placeholder={`وصف ${title}`}
-            value={data[Object.keys(data)[1]]}
+            value={data.description || data.content || ""}
             onChange={(e) =>
-              setData({ ...data, [Object.keys(data)[1]]: e.target.value })
+              setData({ ...data, description: e.target.value, content: e.target.value })
             }
           />
           <button
-            onClick={() => handleAdd(type, data, setData, setList)}
+            onClick={() => handleAddOrUpdate(type, data, setData, setList)}
             className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mb-4"
           >
-            إضافة {title}
+            {isEditing ? `تحديث ${title}` : `إضافة ${title}`}
           </button>
           <table className="w-full border border-gray-300 text-left mt-4">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
-                {Object.keys(data).map((key, length) => (
-                  <th key={key} className="py-3 px-4">
-                    {key}
-                  </th>
-                ))}
+                <th className="py-3 px-4">العنوان</th>
+                <th className="py-3 px-4">الوصف</th>
+                <th className="py-3 px-5">تعديل</th>
                 <th className="py-3 px-5">حذف</th>
               </tr>
             </thead>
             <tbody>
               {list.map((item) => (
                 <tr key={item.id} className="border-b hover:bg-gray-100">
-                  {Object.values(item)
-                    .slice(1)
-                    .map((value, index) => (
-                      <td key={index} className="py-3 px-4">
-                        {value}
-                      </td>
-                    ))}
-
+                  <td className="py-3 px-4">{item.name || item.title}</td>
+                  <td className="py-3 px-4">{item.description || item.content}</td>
+                  <td className="py-3 px-4">
+                    <button
+                      onClick={() => editItem(item, type)}
+                      className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-700"
+                    >
+                      تعديل
+                    </button>
+                  </td>
                   <td className="py-3 px-4">
                     <button
                       onClick={() => handleDelete(item.id, type)}

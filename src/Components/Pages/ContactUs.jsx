@@ -26,7 +26,7 @@ const ContactUs = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "Date"));
+        const querySnapshot = await getDocs(collection(db, "Specialties"));
         const serviceSet = new Set();
         querySnapshot.forEach((doc) => serviceSet.add(doc.data().service));
         setServices([...serviceSet]);
@@ -54,7 +54,7 @@ const ContactUs = () => {
     setLoading(true);
     const fetchAppointments = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "Date"));
+        const querySnapshot = await getDocs(collection(db, "Specialties"));
         const filtered = querySnapshot.docs
           .map((doc) => doc.data())
           .filter((data) => data.service === formData.service);

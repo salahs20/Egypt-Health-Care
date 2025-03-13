@@ -13,9 +13,13 @@ const UserTable = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [newUser, setNewUser] = useState({ name: "", email: "", phone: "" });
-  // const [errorMessage, setErrorMessage] = useState("");
   const [appointments, setAppointments] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const handleError = (error, message) => {
+    console.error(message, error);
+    setErrorMessage(message);
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -25,10 +29,10 @@ const UserTable = () => {
           querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
         );
       } catch (error) {
-        console.error("Error fetching users:", error);
-        setErrorMessage("حدث خطأ أثناء تحميل البيانات.");
+        handleError(error, "حدث خطأ أثناء تحميل بيانات المستخدمين.");
       }
     };
+
     const fetchAppointments = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "Appointments"));
@@ -36,14 +40,14 @@ const UserTable = () => {
           querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
         );
       } catch (error) {
-        console.error("Error fetching appointments:", error);
-        setErrorMessage("حدث خطأ أثناء تحميل البيانات.");
+        handleError(error, "حدث خطأ أثناء تحميل بيانات المواعيد.");
       }
     };
 
     fetchUsers();
     fetchAppointments();
   }, []);
+
   const handleDeleteAppointment = async (appointmentId) => {
     if (window.confirm("هل أنت متأكد من أنك تريد حذف هذا الموعد؟")) {
       try {
@@ -52,10 +56,11 @@ const UserTable = () => {
           appointments.filter((appointment) => appointment.id !== appointmentId)
         );
       } catch (error) {
-        console.error("Error deleting appointment:", error);
+        handleError(error, "حدث خطأ أثناء حذف الموعد.");
       }
     }
   };
+
   const handleAddUser = async () => {
     if (!newUser.name || !newUser.email || !newUser.phone) {
       setErrorMessage("جميع الحقول مطلوبة.");
@@ -67,8 +72,7 @@ const UserTable = () => {
       setNewUser({ name: "", email: "", phone: "" });
       setErrorMessage("");
     } catch (error) {
-      console.error("Error adding user:", error);
-      setErrorMessage("تعذر إضافة المستخدم.");
+      handleError(error, "تعذر إضافة المستخدم.");
     }
   };
 
@@ -78,8 +82,7 @@ const UserTable = () => {
         await deleteDoc(doc(db, "users", userId));
         setUsers(users.filter((user) => user.id !== userId));
       } catch (error) {
-        console.error("Error deleting user:", error);
-        setErrorMessage("تعذر حذف المستخدم.");
+        handleError(error, "تعذر حذف المستخدم.");
       }
     }
   };
@@ -96,8 +99,7 @@ const UserTable = () => {
         )
       );
     } catch (error) {
-      console.error("Error updating user:", error);
-      setErrorMessage("تعذر تعديل صلاحيات المستخدم.");
+      handleError(error, "تعذر تعديل صلاحيات المستخدم.");
     }
   };
 
@@ -106,7 +108,7 @@ const UserTable = () => {
   );
 
   return (
-    <div className=" pb-8  sm:px-6 lg:px-8">
+    <div className="pb-8 sm:px-6 lg:px-8">
       <div className="md:ps-[16rem] mx-auto bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center">
           إدارة المستخدمين
@@ -169,9 +171,9 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.map((user,length) => (
+              {filteredUsers.map((user, index) => (
                 <tr key={user.id} className="border-b hover:bg-gray-100">
-                  <td className="py-3 px-4">{length+1}</td>
+                  <td className="py-3 px-4">{index + 1}</td>
                   <td className="py-3 px-4">{user.name}</td>
                   <td className="py-3 px-4">{user.email}</td>
                   <td className="py-3 px-4">{user.phone}</td>
@@ -199,7 +201,7 @@ const UserTable = () => {
           </table>
         </div>
         <h2 className="text-3xl font-semibold text-blue-700 mb-6 text-center mt-8">
-        جدول الحجز
+          جدول الحجز
         </h2>
 
         {errorMessage && (
@@ -222,12 +224,14 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody>
-              {appointments.map((appointment,length) => (
+              {appointments.map((appointment, index) => (
                 <tr key={appointment.id} className="border-b hover:bg-gray-100">
-                  <td className="py-3 px-4">{length+1}</td>
+                  <td className="py-3 px-4">{index + 1}</td>
                   <td className="py-3 px-4">{appointment.name}</td>
                   <td className="py-3 px-4">{appointment.phone}</td>
-                  <td className="py-3 px-4">{appointment.type} {appointment.clinicOrCenter}</td>
+                  <td className="py-3 px-4">
+                    {appointment.type} {appointment.clinicOrCenter}
+                  </td>
                   <td className="py-3 px-4">{appointment.province}</td>
                   <td className="py-3 px-4">{appointment.service}</td>
                   <td className="py-3 px-4">{appointment.appointment}</td>

@@ -7,16 +7,12 @@ import ImageUploader from "../UploadImage"; // تأكد من المسار الص
 const Home = () => {
 
 
-<motion.button
-  whileHover={{ scale: 1.1 }}
-  whileTap={{ scale: 0.95 }}
-  onHoverStart={() => console.log('hover started!')}
-/>
+
   return (
     <>
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    {/* <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <ImageUploader />
-    </div>
+    </div> */}
       <div  className="min-h-screen flex flex-col items-center justify-center md:flex md:flex-row-reverse md:justify-between pt-16 px-4">
         {/* Text Section */}
         <div className="text-3xl mb-8 md:w-1/2 text-center md:text-end w-full animate-fade-in-up">
