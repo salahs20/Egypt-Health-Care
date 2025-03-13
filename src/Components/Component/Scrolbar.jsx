@@ -40,20 +40,37 @@ const HospitalList = () => {
 
   return (
     <div className="pb-10 text-center">
-      
       <Slider {...settings}>
         {hospitals.map((hospital, index) => (
-          <div key={index} className="text-center cursor-pointer" onClick={() => openImage(hospital.img)}>
-            <img src={hospital.img} alt={hospital.name} className="w-screen h-40 object-cover rounded-lg shadow-md" />
+          <div
+            key={index}
+            className="text-center cursor-pointer"
+            onClick={() => openImage(hospital.img)}
+          >
+            <img
+              src={hospital.img}
+              alt={hospital.name}
+              className="w-screen h-40 object-cover rounded-lg shadow-md"
+            />
             <h3 className="mt-2 text-lg font-medium">{hospital.name}</h3>
           </div>
         ))}
       </Slider>
       {selectedImage && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50" onClick={closeImage}>
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50"
+          onClick={closeImage}
+        >
           <div className="relative">
-            <img src={selectedImage} alt="Selected" className="max-w-full max-h-screen rounded-lg" />
-            <button className="absolute top-2 right-2 text-white bg-red-600 px-4 py-2 rounded" onClick={closeImage}>
+            <img
+              src={selectedImage}
+              alt="Selected"
+              className="max-w-full max-h-screen rounded-lg"
+            />
+            <button
+              className="absolute top-2 right-2 text-white bg-red-600 px-4 py-2 rounded"
+              onClick={closeImage}
+            >
               <MdOutlineClose />
             </button>
           </div>

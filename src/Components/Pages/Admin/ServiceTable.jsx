@@ -148,15 +148,17 @@ const ServiceTable = () => {
           <table className="w-full border border-gray-300 text-left">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
+                <th className="py-3 px-4"></th>
                 <th className="py-3 px-4">المحافظة</th>
                 <th className="py-3 px-4">العيادة</th>
                 <th className="py-3 px-4">المركز</th>
-                <th className="py-3 px-4">إجراء</th>
+                <th className="py-3 px-5">حذف</th>
               </tr>
             </thead>
             <tbody>
-              {clinics.map((clinic) => (
+              {clinics.map((clinic,length) => (
                 <tr key={clinic.id} className="border-b hover:bg-gray-100">
+                  <td className="py-3 px-4">{length+1}</td>
                   <td className="py-3 px-4">
                     {provinces.find((p) => p.id === clinic.provinceId)?.name ||
                       "غير معروف"}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ph from "../../Imag/WhatsApp Image 2024-11-10 at 20.54.05_95d6df99.png";
 import Scrollbar from "../Component/Scrolbar";
 import { motion } from "motion/react"
+import ImageUploader from "../UploadImage"; // تأكد من المسار الصحيح
 const Home = () => {
 
 
@@ -13,6 +14,9 @@ const Home = () => {
 />
   return (
     <>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <ImageUploader />
+    </div>
       <div  className="min-h-screen flex flex-col items-center justify-center md:flex md:flex-row-reverse md:justify-between pt-16 px-4">
         {/* Text Section */}
         <div className="text-3xl mb-8 md:w-1/2 text-center md:text-end w-full animate-fade-in-up">

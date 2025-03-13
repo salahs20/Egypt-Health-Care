@@ -160,6 +160,7 @@ const UserTable = () => {
           <table className="w-full border border-gray-300 text-left">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
+                <th className="py-3 px-4"></th>
                 <th className="py-3 px-4">الاسم</th>
                 <th className="py-3 px-4">البريد الإلكتروني</th>
                 <th className="py-3 px-4">رقم الهاتف</th>
@@ -168,8 +169,9 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.map((user) => (
+              {filteredUsers.map((user,length) => (
                 <tr key={user.id} className="border-b hover:bg-gray-100">
+                  <td className="py-3 px-4">{length+1}</td>
                   <td className="py-3 px-4">{user.name}</td>
                   <td className="py-3 px-4">{user.email}</td>
                   <td className="py-3 px-4">{user.phone}</td>
@@ -208,6 +210,7 @@ const UserTable = () => {
           <table className="w-full border border-gray-300 text-left">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
+                <th className="py-3 px-4"></th>
                 <th className="py-3 px-4">الاسم</th>
                 <th className="py-3 px-4">رقم الهاتف</th>
                 <th className="py-3 px-4">المكان </th>
@@ -219,8 +222,9 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody>
-              {appointments.map((appointment) => (
+              {appointments.map((appointment,length) => (
                 <tr key={appointment.id} className="border-b hover:bg-gray-100">
+                  <td className="py-3 px-4">{length+1}</td>
                   <td className="py-3 px-4">{appointment.name}</td>
                   <td className="py-3 px-4">{appointment.phone}</td>
                   <td className="py-3 px-4">{appointment.type} {appointment.clinicOrCenter}</td>

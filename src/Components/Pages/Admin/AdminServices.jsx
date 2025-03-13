@@ -7,6 +7,7 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { th } from "framer-motion/client";
 
 const AdminServices = () => {
   const [services, setServices] = useState([]);
@@ -105,7 +106,7 @@ const AdminServices = () => {
           <table className="w-full border border-gray-300 text-left mt-4">
             <thead className="bg-gray-200 text-gray-700">
               <tr>
-                {Object.keys(data).map((key) => (
+                {Object.keys(data).map((key, length) => (
                   <th key={key} className="py-3 px-4">
                     {key}
                   </th>
@@ -123,6 +124,7 @@ const AdminServices = () => {
                         {value}
                       </td>
                     ))}
+
                   <td className="py-3 px-4">
                     <button
                       onClick={() => handleDelete(item.id, type)}

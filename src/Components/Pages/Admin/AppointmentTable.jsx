@@ -130,6 +130,7 @@ const AppointmentTable = () => {
           <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
             <thead className="bg-blue-100 text-blue-700">
               <tr>
+                <th className="py-3 px-4 text-left"></th>
                 <th className="py-3 px-4 text-left">الخدمة</th>
                 <th className="py-3 px-4 text-left">التاريخ والوقت</th>
                 <th className="py-3 px-4 text-center">الإجراءات</th>
@@ -137,8 +138,9 @@ const AppointmentTable = () => {
             </thead>
             <tbody>
               {filteredAppointments.length > 0 ? (
-                filteredAppointments.map((appointment) => (
+                filteredAppointments.map((appointment,length) => (
                   <tr key={appointment.id} className="border-b">
+                    <td className="py-3 px-4">{length+1}</td>
                     <td className="py-3 px-4">{appointment.service}</td>
                     <td className="py-3 px-4">{new Date(appointment.date).toLocaleString()}</td>
                     <td className="py-3 px-4 text-center flex gap-2 justify-center">
