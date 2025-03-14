@@ -15,6 +15,7 @@ const UserTable = () => {
   const [newUser, setNewUser] = useState({ name: "", email: "", phone: "" });
   const [appointments, setAppointments] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [editingAppointment, setEditingAppointment] = useState(null);
 
   const handleError = (error, message) => {
     console.error(message, error);
@@ -59,6 +60,34 @@ const UserTable = () => {
         handleError(error, "حدث خطأ أثناء حذف الموعد.");
       }
     }
+  };
+
+  const handleEditAppointment = (appointment) => {
+    setEditingAppointment(appointment);
+  };
+
+  const handleSaveAppointment = async () => {
+    if (editingAppointment) {
+      try {
+        const appointmentRef = doc(db, "Appointments", editingAppointment.id);
+        await updateDoc(appointmentRef, editingAppointment);
+        setAppointments(
+          appointments.map((appointment) =>
+            appointment.id === editingAppointment.id
+              ? editingAppointment
+              : appointment
+          )
+        );
+        setEditingAppointment(null);
+      } catch (error) {
+        handleError(error, "حدث خطأ أثناء تعديل الموعد.");
+      }
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditingAppointment({ ...editingAppointment, [name]: value });
   };
 
   const handleAddUser = async () => {
@@ -220,6 +249,7 @@ const UserTable = () => {
                 <th className="py-3 px-4">التخصص</th>
                 <th className="py-3 px-4">المواعيد</th>
                 <th className="py-3 px-4">الرسالة</th>
+                <th className="py-3 px-4">تعديل</th>
                 <th className="py-3 px-4">حذف</th>
               </tr>
             </thead>
@@ -238,6 +268,14 @@ const UserTable = () => {
                   <td className="py-3 px-4">{appointment.message}</td>
                   <td className="py-3 px-4">
                     <button
+                      onClick={() => handleEditAppointment(appointment)}
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded w-full"
+                    >
+                      تعديل
+                    </button>
+                  </td>
+                  <td className="py-3 px-4">
+                    <button
                       onClick={() => handleDeleteAppointment(appointment.id)}
                       className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded w-full"
                     >
@@ -249,6 +287,78 @@ const UserTable = () => {
             </tbody>
           </table>
         </div>
+
+        {editingAppointment && (
+          <div className="mt-6">
+            <h3 className="text-2xl font-semibold text-blue-700 mb-4 text-center">
+              تعديل الموعد
+            </h3>
+            <div className="mb-3">
+              <input
+                type="text"
+                className="border border-gray-300 py-2 px-4 rounded w-full"
+                placeholder="الاسم"
+                name="name"
+                value={editingAppointment.name}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                className="border border-gray-300 py-2 px-4 rounded w-full"
+                placeholder="رقم الهاتف"
+                name="phone"
+                value={editingAppointment.phone}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                className="border border-gray-300 py-2 px-4 rounded w-full"
+                placeholder="المكان"
+                name="clinicOrCenter"
+                value={editingAppointment.clinicOrCenter}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                className="border border-gray-300 py-2 px-4 rounded w-full"
+                placeholder="المحافظة"
+                name="province"
+                value={editingAppointment.province}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                className="border border-gray-300 py-2 px-4 rounded w-full"
+                placeholder="التخصص"
+                name="service"
+                value={editingAppointment.service}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                className="border border-gray-300 py-2 px-4 rounded w-full"
+                placeholder="المواعيد"
+                name="appointment"
+                value={editingAppointment.appointment}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                className="border border-gray-300 py-2 px-4 rounded w-full"
+                placeholder="الرسالة"
+                name="message"
+                value={editingAppointment.message}
+                onChange={handleChange}
+              />
+              <button
+                onClick={handleSaveAppointment}
+                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded w-full sm:w-auto"
+              >
+                حفظ التعديلات
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
