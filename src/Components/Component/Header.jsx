@@ -7,6 +7,10 @@ import { TbLogin2 } from "react-icons/tb";
 import { IoHomeOutline } from "react-icons/io5";
 
 const Header = () => {
+  const phoneNumber = "201557777869"; // ضع رقمك هنا
+  const handleClick = () => {
+    window.open(`https://wa.me/${phoneNumber}`, "_blank");
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // حالة لفتح/إغلاق الدروب داون
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -43,16 +47,16 @@ const Header = () => {
         <div className="hidden md:flex space-x-6 items-center flex-row-reverse">
           <div className="relative">
             {/* Avatar and Dropdown */}
-            <div className="flex justify-end p-4 ">
+            {/* <div className="flex justify-end p-4 ">
               <Avatar handleMobileItemClick={handleMobileItemClick} />
-            </div>
+            </div> */}
           </div>
-          <Link to="/" className="text-white hover:text-gray-200">
+          <Link to="/" className="text-white hover:text-gray-200 pe-4">
             <IoHomeOutline className="text-xl text-" />
           </Link>
           {/* Services Dropdown */}
-          <div className="relative " onClick={(e) => e.stopPropagation()}>
-            {/* <button
+          {/* <div className="relative " onClick={(e) => e.stopPropagation()}>
+            <button
               onClick={() => {
                 closeDropdowns();
                 setIsServicesOpen(!isServicesOpen);
@@ -61,33 +65,33 @@ const Header = () => {
             >
               <span>خدمات طبية</span>
               <MdArrowDropDown />
-            </button> */}
+            </button>
             {isServicesOpen && (
               <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                {/* <Link
+                <Link
                   to="/services/consultations"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Consultations
-                </Link> */}
-                {/* <Link
+                </Link>
+                <Link
                   to="/services/dental-care"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Dental Care
-                </Link> */}
-                {/* <Link
+                </Link>
+                <Link
                   to="/services/surgery"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
                   Surgery
-                </Link> */}
+                </Link>
               </div>
             )}
-          </div>
+          </div> */}
           {/* Medical Info Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
@@ -132,12 +136,18 @@ const Header = () => {
           <Link to="/contact" className="text-white hover:text-gray-200">
             احجز موعد
           </Link>
-          <Link to="login">
+          {/* <Link to="login">
           <div className="flex  items-center gap-1 text-white">
             <TbLogin2 />
             <span>تسجيل الدخول</span>
           </div>
-          </Link>
+          </Link> */}
+          <div> <p
+          onClick={handleClick}
+          className="text-center cursor-pointer   text-white hover:text-gray-200 transition duration-300"
+        >
+          تواصل معنا
+        </p></div>
           
           {/* <Link to="/signup" className="text-white hover:text-gray-200">
             انشاء حساب
@@ -171,9 +181,9 @@ const Header = () => {
             isOpen ? "block" : "hidden"
           } md:hidden mt-2 w-full bg-blue-700`}
         >
-          <div className="flex justify-end p-4 ">
+          {/* <div className="flex justify-end p-4 ">
             <Avatar handleMobileItemClick={handleMobileItemClick} />
-          </div>
+          </div> */}
 
           <Link
             to="/"
@@ -185,8 +195,8 @@ const Header = () => {
           
 
           {/* Mobile Services Dropdown */}
-          <div className="relative" onClick={(e) => e.stopPropagation()}>
-            {/* <button
+          {/* <div className="relative" onClick={(e) => e.stopPropagation()}>
+            <button
               onClick={() => {
                 setIsServicesOpen(!isServicesOpen);
               }}
@@ -194,33 +204,33 @@ const Header = () => {
             >
               <span>خدمات طبية</span>
               <MdArrowDropDown />
-            </button> */}
+            </button>
             {isServicesOpen && (
               <div className="mt-2 space-y-2 bg-blue-gray-500 rounded-md">
-                {/* <Link
+                <Link
                   to="/services/consultations"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Consultations
-                </Link> */}
-                {/* <Link
+                </Link>
+                <Link
                   to="/services/dental-care"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Dental Care
-                </Link> */}
-                {/* <Link
+                </Link>
+                <Link
                   to="/services/surgery"
                   className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
                   onClick={handleMobileItemClick}
                 >
                   Surgery
-                </Link> */}
+                </Link>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Mobile Medical Info Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
@@ -234,13 +244,13 @@ const Header = () => {
               <MdArrowDropDown />
             </button>
             {isMedicalInfoOpen && (
-              <div className="mt-2 space-y-2 bg-blue-gray-500 rounded-md">
+              <div className="mt-2 space-y-2 bg-blue-900 rounded-md">
                 <Link
                   to="/healthTips"
-                  className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
+                  className="block px-8 py-2 text-gray-200 hover:bg-gray-500 text-[15px]"
                   onClick={handleMobileItemClick}
                 >
-                  Health Tips
+                   Health Tips
                 </Link>
                 {/* <Link
                   to="/healthTips"
@@ -274,7 +284,13 @@ const Header = () => {
           >
             احجز موعد
           </Link>
-          <Link
+          <p
+          onClick={handleClick}
+          className="text-center cursor-pointer   text-white hover:bg-blue-600 transition duration-300 pb-4 pt-1"
+        >
+          تواصل معنا
+        </p>
+          {/* <Link
             to="/Login"
             className="block text-white py-2 px-4 hover:bg-blue-600"
             onClick={handleMobileItemClick}
@@ -283,7 +299,7 @@ const Header = () => {
               <TbLogin2 />
               <span>تسجيل الدخول</span>
             </div>
-          </Link>
+          </Link> */}
           
           {/* <Link
             to="/signup"

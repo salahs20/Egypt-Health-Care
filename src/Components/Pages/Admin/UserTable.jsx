@@ -14,6 +14,7 @@ const UserTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [newUser, setNewUser] = useState({ name: "", email: "", phone: "" });
   const [appointments, setAppointments] = useState([]);
+  const [appointmentSearchTerm, setAppointmentSearchTerm] = useState(""); // New state for appointment search term
   const [errorMessage, setErrorMessage] = useState("");
   const [editingAppointment, setEditingAppointment] = useState(null);
 
@@ -136,6 +137,10 @@ const UserTable = () => {
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const filteredAppointments = appointments.filter((appointment) =>
+    appointment.name.toLowerCase().includes(appointmentSearchTerm.toLowerCase())
+  );
+
   return (
     <div className="pb-8 sm:px-6 lg:px-8">
       <div className="md:ps-[16rem] mx-auto bg-white p-6 rounded-lg shadow-lg">
@@ -237,6 +242,16 @@ const UserTable = () => {
           <p className="text-red-500 mb-4 text-center">{errorMessage}</p>
         )}
 
+        <div className="mb-6">
+          <input
+            type="text"
+            className="border border-gray-300 py-2 px-4 rounded w-full"
+            placeholder="بحث"
+            value={appointmentSearchTerm}
+            onChange={(e) => setAppointmentSearchTerm(e.target.value)}
+          />
+        </div>
+
         <div className="overflow-x-auto">
           <table className="w-full border border-gray-300 text-left">
             <thead className="bg-gray-200 text-gray-700">
@@ -254,7 +269,7 @@ const UserTable = () => {
               </tr>
             </thead>
             <tbody>
-              {appointments.map((appointment, index) => (
+              {filteredAppointments.map((appointment, index) => (
                 <tr key={appointment.id} className="border-b hover:bg-gray-100">
                   <td className="py-3 px-4">{index + 1}</td>
                   <td className="py-3 px-4">{appointment.name}</td>
