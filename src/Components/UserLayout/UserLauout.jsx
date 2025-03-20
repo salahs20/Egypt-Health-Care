@@ -13,6 +13,8 @@ import UserDashboard from "../Pages/User/UserDashboard";
 // import ServiceTable from "../Pages/Admin/ServiceTable";
 import Header from "../Component/Header";
 import HealthTips from "../Pages/User/HealthTips";
+import Clinics from "../Pages/User/Clinics";
+import Centers from "../Pages/User/Centers";
 
 const UserLauout = () => {
 
@@ -34,6 +36,8 @@ const UserLauout = () => {
         <Route path="/signup" element={<SignUp />} exact />
         <Route path="/userDashboard" element={<UserDashboard />} exact />
         <Route path="/healthTips" element={<HealthTips />} exact />
+        <Route path="/Clinics" element={<Clinics />} exact />
+        <Route path="/Centers" element={<Centers />} exact />
 
         {/* <Route path="/UserTable" element={<UserTable />} exact />
         <Route path="/AppointmentTable" element={<AppointmentTable />} exact />

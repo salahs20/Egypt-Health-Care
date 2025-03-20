@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 const MedicalServices = () => {
   const [services, setServices] = useState([]);
@@ -9,7 +10,10 @@ const MedicalServices = () => {
     const fetchServices = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "services"));
-        const servicesList = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const servicesList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setServices(servicesList);
       } catch (err) {
         console.error("خطأ في جلب البيانات:", err);
@@ -35,9 +39,13 @@ const MedicalServices = () => {
                 {service.name}
               </h4>
               <p className="mt-4 text-gray-600">{service.description}</p>
-              <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                مزيد من التفاصيل
-              </button>
+
+              <Link to="/contact">
+                {" "}
+                <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                  المزيد
+                </button>
+              </Link>
             </div>
           ))}
         </div>

@@ -55,7 +55,7 @@ const Header = () => {
             <IoHomeOutline className="text-xl text-" />
           </Link>
           {/* Services Dropdown */}
-          {/* <div className="relative " onClick={(e) => e.stopPropagation()}>
+          <div className="relative " onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => {
                 closeDropdowns();
@@ -63,35 +63,28 @@ const Header = () => {
               }}
               className="text-white hover:text-gray-200 focus:outline-none flex items-center"
             >
-              <span>خدمات طبية</span>
+              <span>الخدمات الصحية</span>
               <MdArrowDropDown />
             </button>
             {isServicesOpen && (
               <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                 <Link
-                  to="/services/consultations"
+                  to="/Clinics"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
-                  Consultations
+                  عيادات
                 </Link>
                 <Link
-                  to="/services/dental-care"
+                  to="/Centers"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   onClick={closeDropdowns}
                 >
-                  Dental Care
-                </Link>
-                <Link
-                  to="/services/surgery"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  onClick={closeDropdowns}
-                >
-                  Surgery
+                  مراكز{" "}
                 </Link>
               </div>
             )}
-          </div> */}
+          </div>
           {/* Medical Info Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
@@ -142,17 +135,19 @@ const Header = () => {
             <span>تسجيل الدخول</span>
           </div>
           </Link> */}
-          <div> <p
-          onClick={handleClick}
-          className="text-center cursor-pointer   text-white hover:text-gray-200 transition duration-300"
-        >
-          تواصل معنا
-        </p></div>
-          
+          <div>
+            {" "}
+            <p
+              onClick={handleClick}
+              className="text-center cursor-pointer text-[14px]  text-white hover:text-green-600 transition duration-300"
+            >
+              تواصل معنا
+            </p>
+          </div>
+
           {/* <Link to="/signup" className="text-white hover:text-gray-200">
             انشاء حساب
           </Link> */}
-         
         </div>
 
         {/* Mobile Menu Toggle Button */}
@@ -192,45 +187,37 @@ const Header = () => {
           >
             <IoHomeOutline className="text-xl text-" />
           </Link>
-          
 
           {/* Mobile Services Dropdown */}
-          {/* <div className="relative" onClick={(e) => e.stopPropagation()}>
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => {
                 setIsServicesOpen(!isServicesOpen);
               }}
               className=" text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
             >
-              <span>خدمات طبية</span>
+              <span>الخدمات الصحية</span>
               <MdArrowDropDown />
             </button>
             {isServicesOpen && (
-              <div className="mt-2 space-y-2 bg-blue-gray-500 rounded-md">
+              <div className="mt-2 space-y-2 bg-blue-900 rounded-md">
                 <Link
-                  to="/services/consultations"
-                  className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
+                  to="/Clinics"
+                  className="block px-8 pt-2 text-gray-200 hover:bg-gray-500 text-[15px]"
                   onClick={handleMobileItemClick}
                 >
-                  Consultations
+                  عيادات
                 </Link>
                 <Link
-                  to="/services/dental-care"
-                  className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
+                  to="/Centers"
+                  className="block px-8 pb-2 text-gray-200 hover:bg-gray-500 text-[15px]"
                   onClick={handleMobileItemClick}
                 >
-                  Dental Care
-                </Link>
-                <Link
-                  to="/services/surgery"
-                  className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={handleMobileItemClick}
-                >
-                  Surgery
+                  مراكز
                 </Link>
               </div>
             )}
-          </div> */}
+          </div>
 
           {/* Mobile Medical Info Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
@@ -250,22 +237,9 @@ const Header = () => {
                   className="block px-8 py-2 text-gray-200 hover:bg-gray-500 text-[15px]"
                   onClick={handleMobileItemClick}
                 >
-                   Health Tips
+                  Health Tips
                 </Link>
-                {/* <Link
-                  to="/healthTips"
-                  className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={handleMobileItemClick}
-                >
-                  Disease Prevention
-                </Link> */}
-                {/* <Link
-                  to="/info/medications"
-                  className="block px-4 py-2 text-gray-200 hover:bg-gray-500"
-                  onClick={handleMobileItemClick}
-                >
-                  Medications
-                </Link> */}
+              
               </div>
             )}
           </div>
@@ -279,17 +253,17 @@ const Header = () => {
           </Link>
           <Link
             to="/contact"
-            className="block text-white py-2 px-4 hover:bg-blue-600"
+            className="block text-white  py-2 px-4 text-[14px] hover:bg-blue-600"
             onClick={handleMobileItemClick}
           >
             احجز موعد
           </Link>
           <p
-          onClick={handleClick}
-          className="text-center cursor-pointer   text-white hover:bg-blue-600 transition duration-300 pb-4 pt-1"
-        >
-          تواصل معنا
-        </p>
+            onClick={handleClick}
+            className="text-center cursor-pointer   text-white hover:bg-blue-600 transition duration-300 pb-4 pt-1"
+          >
+            تواصل معنا
+          </p>
           {/* <Link
             to="/Login"
             className="block text-white py-2 px-4 hover:bg-blue-600"
@@ -300,7 +274,7 @@ const Header = () => {
               <span>تسجيل الدخول</span>
             </div>
           </Link> */}
-          
+
           {/* <Link
             to="/signup"
             className="block text-white py-2 px-4 hover:bg-blue-600"
@@ -308,7 +282,6 @@ const Header = () => {
           >
             انشاء حساب
           </Link> */}
-         
         </div>
       </div>
     </nav>
