@@ -176,7 +176,7 @@ const ContactUs = () => {
   return (
     <div className="p-8 max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-[5rem]">
       <h2 className="text-2xl font-semibold text-center text-blue-700 mb-6">
-        احجز موعد
+        احجز  موعد
       </h2>
       <form onSubmit={handleSubmit} className="grid gap-4">
         <input
@@ -308,12 +308,7 @@ const ContactUs = () => {
         >
           تعديل البيانات{" "}
         </button>
-        <p
-          onClick={handleClick}
-          className="text-center cursor-pointer   text-gray-800 hover:text-blue-600 transition duration-300"
-        >
-          تواصل معنا
-        </p>
+       
       </form>
       {error && <p className="text-red-600 text-center mt-4">{error}</p>}
       <Modal

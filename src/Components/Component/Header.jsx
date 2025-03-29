@@ -7,10 +7,7 @@ import { TbLogin2 } from "react-icons/tb";
 import { IoHomeOutline } from "react-icons/io5";
 
 const Header = () => {
-  const phoneNumber = "201557777869"; // ضع رقمك هنا
-  const handleClick = () => {
-    window.open(`https://wa.me/${phoneNumber}`, "_blank");
-  };
+
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // حالة لفتح/إغلاق الدروب داون
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -135,15 +132,7 @@ const Header = () => {
             <span>تسجيل الدخول</span>
           </div>
           </Link> */}
-          <div>
-            {" "}
-            <p
-              onClick={handleClick}
-              className="text-center cursor-pointer text-[14px]  text-white hover:text-green-600 transition duration-300"
-            >
-              تواصل معنا
-            </p>
-          </div>
+         
 
           {/* <Link to="/signup" className="text-white hover:text-gray-200">
             انشاء حساب
@@ -258,12 +247,12 @@ const Header = () => {
           >
             احجز موعد
           </Link>
-          <p
+          {/* <p
             onClick={handleClick}
             className="text-center cursor-pointer   text-white hover:bg-blue-600 transition duration-300 pb-4 pt-1"
           >
             تواصل معنا
-          </p>
+          </p> */}
           {/* <Link
             to="/Login"
             className="block text-white py-2 px-4 hover:bg-blue-600"

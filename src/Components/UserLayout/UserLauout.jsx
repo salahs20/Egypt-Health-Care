@@ -15,18 +15,11 @@ import Header from "../Component/Header";
 import HealthTips from "../Pages/User/HealthTips";
 import Clinics from "../Pages/User/Clinics";
 import Centers from "../Pages/User/Centers";
+import Whatsapp from "../Component/Whatsapp";
 
 const UserLauout = () => {
-
-
-
-
-
-
-
-  
   return (
-    <>
+    <div>
       <Header />
       <Routes future={{ v7_startTransition: true }}>
         <Route path="/" element={<Home />} exact />
@@ -44,8 +37,9 @@ const UserLauout = () => {
         <Route path="/ServiceTable" element={<ServiceTable />} exact /> */}
 
         <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+      </Routes>{" "}
+      <Whatsapp />
+    </div>
   );
 };
 
