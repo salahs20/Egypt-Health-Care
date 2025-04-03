@@ -21,20 +21,27 @@ const HospitalList = () => {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
+    slidesToShow: 5,
+    slidesToScroll: 1, // تمرير عنصر واحد للحفاظ على السلاسة
     autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 400,
+    speed: 3000, // حركة مستمرة بطيئة
+    autoplaySpeed: 0, // منع التوقف بين الحركات
+    cssEase: "linear",
     arrows: false,
+    pauseOnHover: false,
+    pauseOnFocus: false,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 768, settings: { slidesToShow: 1 } },
+      { breakpoint: 1200, settings: { slidesToShow: 4, slidesToScroll: 1, speed: 4000 } },
+      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 1, speed: 3500 } },
+      { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 1, speed: 3000 } },
+      { breakpoint: 480, settings: { slidesToShow: 1.6, slidesToScroll: 1, speed: 2500 } }, 
     ],
   };
+  
+  
 
   return (
-    <div className="pb-10 text-center">
+    <div className="pb-10 pt-4 text-center">
       <Slider {...settings}>
         {images.map((hospital, index) => (
           <div
@@ -45,7 +52,7 @@ const HospitalList = () => {
             <img
               src={hospital.img}
               alt={hospital.name}
-              className="w-screen h-40 object-cover rounded-lg shadow-md"
+              className="w-64 h-64 object-cover rounded-lg shadow-md mx-auto" // تعديل الحجم هنا
             />
             <h3 className="mt-2 text-lg font-medium">{hospital.name}</h3>
           </div>
