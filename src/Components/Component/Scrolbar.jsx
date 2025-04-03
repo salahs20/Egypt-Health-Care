@@ -22,9 +22,9 @@ const HospitalList = () => {
     dots: false,
     infinite: true,
     slidesToShow: 5,
-    slidesToScroll: 1, // تمرير عنصر واحد للحفاظ على السلاسة
+    slidesToScroll: 1.5, // تمرير عنصر واحد للحفاظ على السلاسة
     autoplay: true,
-    speed: 3000, // حركة مستمرة بطيئة
+    speed: 2000, // حركة مستمرة بطيئة
     autoplaySpeed: 0, // منع التوقف بين الحركات
     cssEase: "linear",
     arrows: false,
