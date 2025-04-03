@@ -4,18 +4,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { MdOutlineClose } from "react-icons/md";
 
-const hospitals = [
-  { name: "مستشفى القاهرة الدولي", img: "/images/cairo-hospital.jpg" },
-  { name: "مستشفى النيل", img: "/images/nile-hospital.jpg" },
-  { name: "مستشفى الحرمين", img: "/images/haramain-hospital.jpg" },
-  { name: "مستشفى الأزهر", img: "/images/azhar-hospital.jpg" },
-  { name: "مستشفى الرحمة", img: "/images/rahma-hospital.jpg" },
-  { name: "مستشفى الشفاء", img: "/images/shifa-hospital.jpg" },
-  { name: "مستشفى الفاروق", img: "/images/farouk-hospital.jpg" },
-  { name: "مستشفى العافية", img: "/images/afiya-hospital.jpg" },
-  { name: "مستشفى النخبة", img: "/images/nokhba-hospital.jpg" },
-  { name: "مستشفى المستقبل", img: "/images/mustaqbal-hospital.jpg" },
-];
+// استيراد الصور وتحويلها إلى قائمة
+const images = Object.entries(import.meta.glob("../../Imag/Images/*.jpg", { eager: true })).map(
+  ([path, module]) => ({
+    name: path.split("/").pop().replace(".jpg", ""), // استخراج اسم الصورة بدون الامتداد
+    img: module.default,
+  })
+);
 
 const HospitalList = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -26,8 +21,8 @@ const HospitalList = () => {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 2,
-    slidesToScroll: 0.5,
+    slidesToShow: 4,
+    slidesToScroll: 1,
     autoplay: true,
     speed: 2000,
     autoplaySpeed: 400,
@@ -41,7 +36,7 @@ const HospitalList = () => {
   return (
     <div className="pb-10 text-center">
       <Slider {...settings}>
-        {hospitals.map((hospital, index) => (
+        {images.map((hospital, index) => (
           <div
             key={index}
             className="text-center cursor-pointer"
