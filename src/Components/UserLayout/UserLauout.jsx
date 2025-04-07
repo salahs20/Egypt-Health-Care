@@ -7,15 +7,11 @@ import NotFound from "../Pages/NotFound";
 import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
 import UserDashboard from "../Pages/User/UserDashboard";
-
-// import UserTable from "../Pages/Admin/UserTable";
-// import AppointmentTable from "../Pages/Admin/AppointmentTable";
-// import ServiceTable from "../Pages/Admin/ServiceTable";
 import Header from "../Component/Header";
 import HealthTips from "../Pages/User/HealthTips";
 import Clinics from "../Pages/User/Clinics";
 import Centers from "../Pages/User/Centers";
-import Whatsapp from "../Component/Whatsapp";
+
 import Help from "../Component/Help";
 
 const UserLauout = () => {
@@ -40,7 +36,7 @@ const UserLauout = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>{" "}
       {/* <Whatsapp /> */}
-      <Help/>
+      <Help />
     </div>
   );
 };

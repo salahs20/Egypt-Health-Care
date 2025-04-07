@@ -77,27 +77,17 @@ const Header = () => {
           </div>
           {/* Medical Info Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => {
-                closeDropdowns();
-                setIsMedicalInfoOpen(!isMedicalInfoOpen);
-              }}
-              className="text-white hover:text-gray-200 focus:outline-none flex items-center"
-            >
-              <span>معلومات طبية</span>
-              <MdArrowDropDown />
-            </button>
-            {isMedicalInfoOpen && (
-              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+           
+              <div className="">
                 <Link
                   to="/healthTips"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  className="text-white hover:text-gray-200 focus:outline-none flex items-center"
                   onClick={closeDropdowns}
                 >
-                  Health Tips
+                 معلومات طبية
                 </Link>
               </div>
-            )}
+            
           </div>
           <Link to="/services" className="text-white hover:text-gray-200">
             خدماتنا
@@ -174,26 +164,15 @@ const Header = () => {
 
           {/* Mobile Medical Info Dropdown */}
           <div className="relative" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => {
-                setIsMedicalInfoOpen(!isMedicalInfoOpen);
-              }}
-              className=" text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
-            >
-              <span>معلومات طبية</span>
-              <MdArrowDropDown />
-            </button>
-            {isMedicalInfoOpen && (
-              <div className="mt-2 space-y-2 bg-blue-900 rounded-md">
-                <Link
-                  to="/healthTips"
-                  className="block px-8 py-2 text-gray-200 hover:bg-gray-500 text-[15px]"
-                  onClick={handleMobileItemClick}
-                >
-                  Health Tips
-                </Link>
-              </div>
-            )}
+            <div className="">
+              <Link
+                to="/healthTips"
+                className=" text-white py-2 px-4 hover:bg-blue-600 w-full text-left focus:outline-none flex items-center"
+                onClick={handleMobileItemClick}
+              >
+                معلومات طبية
+              </Link>
+            </div>
           </div>
 
           <Link
