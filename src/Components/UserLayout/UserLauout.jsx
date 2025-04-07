@@ -16,6 +16,7 @@ import HealthTips from "../Pages/User/HealthTips";
 import Clinics from "../Pages/User/Clinics";
 import Centers from "../Pages/User/Centers";
 import Whatsapp from "../Component/Whatsapp";
+import Help from "../Component/Help";
 
 const UserLauout = () => {
   return (
@@ -38,7 +39,8 @@ const UserLauout = () => {
 
         <Route path="*" element={<NotFound />} />
       </Routes>{" "}
-      <Whatsapp />
+      {/* <Whatsapp /> */}
+      <Help/>
     </div>
   );
 };

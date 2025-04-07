@@ -7,7 +7,6 @@ import { TbLogin2 } from "react-icons/tb";
 import { IoHomeOutline } from "react-icons/io5";
 
 const Header = () => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // حالة لفتح/إغلاق الدروب داون
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -40,14 +39,8 @@ const Header = () => {
           <img src={logo} alt="" className="w-[50px] h-[35px]" />
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 items-center flex-row-reverse">
-          <div className="relative">
-            {/* Avatar and Dropdown */}
-            {/* <div className="flex justify-end p-4 ">
-              <Avatar handleMobileItemClick={handleMobileItemClick} />
-            </div> */}
-          </div>
+          <div className="relative"></div>
           <Link to="/" className="text-white hover:text-gray-200 pe-4">
             <IoHomeOutline className="text-xl text-" />
           </Link>
@@ -103,20 +96,6 @@ const Header = () => {
                 >
                   Health Tips
                 </Link>
-                {/* <Link
-                  to="/info/disease-prevention"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  onClick={closeDropdowns}
-                >
-                  Disease Prevention
-                </Link> */}
-                {/* <Link
-                  to="/info/medications"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  onClick={closeDropdowns}
-                >
-                  Medications
-                </Link> */}
               </div>
             )}
           </div>
@@ -126,17 +105,6 @@ const Header = () => {
           <Link to="/contact" className="text-white hover:text-gray-200">
             احجز موعد
           </Link>
-          {/* <Link to="login">
-          <div className="flex  items-center gap-1 text-white">
-            <TbLogin2 />
-            <span>تسجيل الدخول</span>
-          </div>
-          </Link> */}
-         
-
-          {/* <Link to="/signup" className="text-white hover:text-gray-200">
-            انشاء حساب
-          </Link> */}
         </div>
 
         {/* Mobile Menu Toggle Button */}
@@ -165,10 +133,6 @@ const Header = () => {
             isOpen ? "block" : "hidden"
           } md:hidden mt-2 w-full bg-blue-700`}
         >
-          {/* <div className="flex justify-end p-4 ">
-            <Avatar handleMobileItemClick={handleMobileItemClick} />
-          </div> */}
-
           <Link
             to="/"
             className="block text-white py-2 px-4 hover:bg-blue-600"
@@ -228,7 +192,6 @@ const Header = () => {
                 >
                   Health Tips
                 </Link>
-              
               </div>
             )}
           </div>
@@ -247,30 +210,6 @@ const Header = () => {
           >
             احجز موعد
           </Link>
-          {/* <p
-            onClick={handleClick}
-            className="text-center cursor-pointer   text-white hover:bg-blue-600 transition duration-300 pb-4 pt-1"
-          >
-            تواصل معنا
-          </p> */}
-          {/* <Link
-            to="/Login"
-            className="block text-white py-2 px-4 hover:bg-blue-600"
-            onClick={handleMobileItemClick}
-          >
-            <div className="flex  items-center gap-1 text-white">
-              <TbLogin2 />
-              <span>تسجيل الدخول</span>
-            </div>
-          </Link> */}
-
-          {/* <Link
-            to="/signup"
-            className="block text-white py-2 px-4 hover:bg-blue-600"
-            onClick={handleMobileItemClick}
-          >
-            انشاء حساب
-          </Link> */}
         </div>
       </div>
     </nav>

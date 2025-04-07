@@ -259,6 +259,7 @@ const UserTable = () => {
                 <th className="py-3 px-4"></th>
                 <th className="py-3 px-4">الاسم</th>
                 <th className="py-3 px-4">رقم الهاتف</th>
+                <th className="py-3 px-4">الايميل</th>
                 <th className="py-3 px-4">المكان </th>
                 <th className="py-3 px-4">المحافظة </th>
                 <th className="py-3 px-4">التخصص</th>
@@ -274,6 +275,7 @@ const UserTable = () => {
                   <td className="py-3 px-4">{index + 1}</td>
                   <td className="py-3 px-4">{appointment.name}</td>
                   <td className="py-3 px-4">{appointment.phone}</td>
+                  <td className="py-3 px-4">{appointment.email}</td>
                   <td className="py-3 px-4">
                     {appointment.type} {appointment.clinicOrCenter}
                   </td>
