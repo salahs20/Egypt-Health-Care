@@ -78,11 +78,19 @@ const Clinics = () => {
                 {clinic.name}
               </h4>
               <h4 className="text-l font-semibold text-gray-600">
-                {clinic.province}
+                الموقع: {clinic.address}
               </h4>
-              <Link to="/contact">
+              <h4 className="text-l font-semibold text-gray-600">
+                المحافظة: {clinic.province}
+              </h4>
+              <Link
+                to={{
+                  pathname: "/contact",
+                  state: { clinicName: clinic.name, province: clinic.province },
+                }}
+              >
                 <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                  المزيد
+                  حجز
                 </button>
               </Link>
             </div>

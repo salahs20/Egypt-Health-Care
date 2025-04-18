@@ -79,10 +79,15 @@ const Centers = () => {
               <h4 className="text-xl font-semibold text-blue-600">
                 {center.name}
               </h4>
-              <p className="mt-4 text-gray-600">{center.province}</p>
+              <p className="text-l font-semibold text-gray-600">
+                الموقع: {center.address}
+              </p>
+              <p className="text-l font-semibold text-gray-600">
+                المحافظة: {center.province}
+              </p>
               <Link to="/contact">
                 <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                  المزيد
+                  حجز
                 </button>
               </Link>
             </div>

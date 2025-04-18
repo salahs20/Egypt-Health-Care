@@ -300,7 +300,7 @@ const ContactUs = () => {
           className="border p-2 rounded"
         ></textarea>
         <button type="submit" className="bg-blue-600 text-white p-2 rounded">
-          {submittedData ? "عرض البيانات" : "إرسال الطلب"}
+        إرسال الطلب
         </button>
 
       </form>
@@ -353,18 +353,8 @@ const ContactUs = () => {
               </p>
             </div>
             <div className="flex justify-end space-x-2 mt-4">
-              <button
-                onClick={handleDownload}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-opacity-80"
-              >
-                تحميل كملف نصي
-              </button>
-              <button
-                onClick={handleDownloadImage}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-opacity-80"
-              >
-                تحميل كصورة
-              </button>
+            
+             
               <button
                 onClick={() => setModalIsOpen(false)}
                 className="bg-red-600 text-white px-4 py-2 rounded hover:bg-opacity-80"

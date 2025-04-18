@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { MdOutlineClose } from "react-icons/md";
+import { useNavigate } from "react-router-dom"; // استيراد useNavigate
 
 // استيراد الصور وتحويلها إلى قائمة
 const images = Object.entries(import.meta.glob("../../Imag/Images/*.jpg", { eager: true })).map(
@@ -14,8 +15,9 @@ const images = Object.entries(import.meta.glob("../../Imag/Images/*.jpg", { eage
 
 const HospitalList = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const navigate = useNavigate(); // إنشاء دالة التنقل
 
-  const openImage = (img) => setSelectedImage(img);
+  const openImage = () => navigate("/centers"); // التنقل إلى صفحة Centers
   const closeImage = () => setSelectedImage(null);
 
   const settings = {
@@ -37,8 +39,6 @@ const HospitalList = () => {
       { breakpoint: 480, settings: { slidesToShow: 1.6, slidesToScroll: 1, speed: 2500 } }, 
     ],
   };
-  
-  
 
   return (
     <div className="pb-10 pt-4 text-center">
@@ -47,14 +47,14 @@ const HospitalList = () => {
           <div
             key={index}
             className="text-center cursor-pointer"
-            onClick={() => openImage(hospital.img)}
+            onClick={openImage} // التنقل عند الضغط
           >
             <img
               src={hospital.img}
               alt={hospital.name}
-              className="w-64 h-64 object-cover rounded-lg shadow-md mx-auto" // تعديل الحجم هنا
+              className="w-64 h-64 object-cover rounded-lg shadow-md mx-auto ps-1" // تعديل الحجم هنا
             />
-            <h3 className="mt-2 text-lg font-medium">{hospital.name}</h3>
+            <h3 className="mt-2  text-lg font-medium">{hospital.name}</h3>
           </div>
         ))}
       </Slider>
