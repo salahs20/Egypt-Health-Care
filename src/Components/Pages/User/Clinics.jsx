@@ -8,6 +8,7 @@ const Clinics = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProvince, setSelectedProvince] = useState("");
   const [provinces, setProvinces] = useState([]);
+  const [visibleCenters, setVisibleCenters] = useState(6);
 
   useEffect(() => {
     const fetchClinics = async () => {
@@ -41,6 +42,10 @@ const Clinics = () => {
       (selectedProvince === "" || clinic.province === selectedProvince)
   );
 
+  const loadMoreCenters = () => {
+    setVisibleCenters((prevVisibleCenters) => prevVisibleCenters + 6);
+  };
+
   return (
     <div className="pt-16 pb-8 px-4 ">
       <div className="bg-white p-6 rounded-lg shadow-lg mt-8">
@@ -69,7 +74,7 @@ const Clinics = () => {
           </select>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {filteredClinics.map((clinic) => (
+          {filteredClinics.slice(0, visibleCenters).map((clinic) => (
             <div
               key={clinic.id}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-2"
@@ -96,6 +101,16 @@ const Clinics = () => {
             </div>
           ))}
         </div>
+        {visibleCenters < filteredClinics.length && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={loadMoreCenters}
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+            >
+              عرض المزيد
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

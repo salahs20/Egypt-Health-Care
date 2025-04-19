@@ -8,6 +8,9 @@ const Centers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProvince, setSelectedProvince] = useState("");
   const [provinces, setProvinces] = useState([]);
+  const [visibleCenters, setVisibleCenters] = useState(6);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchHealthTips = async () => {
@@ -17,16 +20,16 @@ const Centers = () => {
           tipsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
         );
       } catch (error) {
-        console.error("Error fetching health tips:", error);
+        setError("حدث خطأ أثناء جلب البيانات.");
+      } finally {
+        setLoading(false);
       }
     };
     fetchHealthTips();
   }, []);
 
   useEffect(() => {
-    // Fetch provinces from the database or define them statically
     const fetchProvinces = async () => {
-      // Example of fetching provinces from a collection named "Provinces"
       try {
         const provincesSnapshot = await getDocs(collection(db, "Provinces"));
         setProvinces(provincesSnapshot.docs.map((doc) => doc.data().name));
@@ -37,11 +40,23 @@ const Centers = () => {
     fetchProvinces();
   }, []);
 
+  const loadMoreCenters = () => {
+    setVisibleCenters((prev) => prev + 6);
+  };
+
   const filteredCenters = centers.filter(
     (center) =>
       center.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
       (selectedProvince === "" || center.province === selectedProvince)
   );
+
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
+
+  if (loading) {
+    return <p className="text-center">جاري التحميل...</p>;
+  }
 
   return (
     <div className="pt-16 pb-8 px-4  ">
@@ -71,20 +86,23 @@ const Centers = () => {
           </select>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCenters.map((center) => (
+          {filteredCenters.slice(0, visibleCenters).map((center) => (
             <div
               key={center.id}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-2"
             >
-              <h4 className="text-xl font-semibold text-blue-600">
-                {center.name}
-              </h4>
+              <Link to={`/center/${center.id}`}>
+                <h4 className="text-xl font-semibold text-blue-600">
+                  {center.name}
+                </h4>
+              </Link>
               <p className="text-l font-semibold text-gray-600">
                 الموقع: {center.address}
               </p>
               <p className="text-l font-semibold text-gray-600">
                 المحافظة: {center.province}
               </p>
+              
               <Link to="/contact">
                 <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                   حجز
@@ -92,7 +110,23 @@ const Centers = () => {
               </Link>
             </div>
           ))}
+          {filteredCenters.length === 0 && (
+            <p className="text-center text-gray-500">لا توجد مراكز مطابقة للبحث.</p>
+          )}
         </div>
+        {visibleCenters < filteredCenters.length && (
+      <div className="flex justify-center mt-6">
+      <button
+        onClick={loadMoreCenters}
+        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+      >
+        عرض المزيد
+      </button>
+    </div>
+     
+      
+        )}
+       
       </div>
     </div>
   );
