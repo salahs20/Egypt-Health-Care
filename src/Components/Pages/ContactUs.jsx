@@ -115,8 +115,12 @@ const ContactUs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, "Appointments"), formData);
-      setSubmittedData(formData); // تحديث حالة البيانات المدخلة بعد الإرسال
+      const formDataWithDate = {
+        ...formData,
+        registrationDate: new Date().toISOString()
+      };
+      await addDoc(collection(db, "Appointments"), formDataWithDate);
+      setSubmittedData(formDataWithDate); // تحديث حالة البيانات المدخلة بعد الإرسال
       setFormData({
         name: "",
         email: "",
@@ -386,6 +390,9 @@ const ContactUs = () => {
               </p>
               <p>
                 <strong>ملاحظات:</strong> {submittedData.message}
+              </p>
+              <p>
+                <strong>تاريخ التسجيل:</strong> {formatDate(submittedData.registrationDate)}
               </p>
             </div>
             <div className="flex justify-end space-x-2 mt-4">
