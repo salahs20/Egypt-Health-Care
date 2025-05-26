@@ -174,6 +174,40 @@ const ContactUs = () => {
       });
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const months = {
+      January: 'يناير',
+      February: 'فبراير',
+      March: 'مارس',
+      April: 'أبريل',
+      May: 'مايو',
+      June: 'يونيو',
+      July: 'يوليو',
+      August: 'أغسطس',
+      September: 'سبتمبر',
+      October: 'أكتوبر',
+      November: 'نوفمبر',
+      December: 'ديسمبر'
+    };
+
+    const formattedDate = date.toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    // تحويل الشهر إلى العربية
+    let arabicDate = formattedDate;
+    Object.entries(months).forEach(([eng, ar]) => {
+      arabicDate = arabicDate.replace(eng, ar);
+    });
+
+    return arabicDate;
+  };
+
   return (
     <div className="p-8 max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-[5rem]">
       <h2 className="text-2xl font-semibold text-center text-blue-700 mb-6">
@@ -287,7 +321,7 @@ const ContactUs = () => {
           <option value="">اختر الموعد</option>
           {appointments.map((appointment, index) => (
             <option key={index} value={appointment.date}>
-              {appointment.date}
+              {formatDate(appointment.date)}
             </option>
           ))}
         </select>
@@ -300,9 +334,8 @@ const ContactUs = () => {
           className="border p-2 rounded"
         ></textarea>
         <button type="submit" className="bg-blue-600 text-white p-2 rounded">
-        إرسال الطلب
+          إرسال الطلب
         </button>
-
       </form>
       {error && <p className="text-red-600 text-center mt-4">{error}</p>}
       <Modal
@@ -333,6 +366,9 @@ const ContactUs = () => {
                 <strong>المحافظة:</strong> {submittedData.province}
               </p>
               <p>
+                <strong>العنوان:</strong> {submittedData.address}
+              </p>
+              <p>
                 <strong>النوع:</strong>{" "}
                 {submittedData.type === "clinic" ? "عيادة" : "مركز"}
               </p>
@@ -346,15 +382,13 @@ const ContactUs = () => {
                 <strong>الخدمة:</strong> {submittedData.service}
               </p>
               <p>
-                <strong>الموعد:</strong> {submittedData.appointment}
+                <strong>الموعد:</strong> {formatDate(submittedData.appointment)}
               </p>
               <p>
                 <strong>ملاحظات:</strong> {submittedData.message}
               </p>
             </div>
             <div className="flex justify-end space-x-2 mt-4">
-            
-             
               <button
                 onClick={() => setModalIsOpen(false)}
                 className="bg-red-600 text-white px-4 py-2 rounded hover:bg-opacity-80"
